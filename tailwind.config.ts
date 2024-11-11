@@ -12,6 +12,10 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        pretendard: ["var(--font-pretendard)"],
+        aldrich: ["var(--font-aldrich)"],
+      },
     },
   },
   plugins: [],
