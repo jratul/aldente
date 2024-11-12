@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { SessionProvider } from "next-auth/react";
+import ClientProvider from "./context/ClientProvider";
 
 export const metadata: Metadata = {
   title: "Aldente",
@@ -27,7 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${pretendard.variable} ${aldrich.variable}`}>
-      <body className={"font-pretendard tracking-tight"}>{children}</body>
+      <body className={"font-pretendard tracking-tight max-w-3xl mx-auto"}>
+        <ClientProvider>{children}</ClientProvider>
+      </body>
     </html>
   );
 }
