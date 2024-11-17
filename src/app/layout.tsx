@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import ClientProvider from "@context/ClientProvider";
+import ClientProvider from "context/ClientProvider";
 import Nav from "@components/Nav";
+import Container from "@components/Container";
 
 export const metadata: Metadata = {
   title: "Aldente",
@@ -29,10 +30,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${pretendard.variable} ${aldrich.variable}`}>
-      <body className={"font-pretendard tracking-tight max-w-3xl mx-auto"}>
+      <body
+        className={
+          "font-pretendard tracking-tight min-w-[300px] max-w-3xl mx-auto"
+        }
+      >
         <ClientProvider>
           <Nav />
-          {children}
+          <Container>{children}</Container>
         </ClientProvider>
       </body>
     </html>

@@ -18,35 +18,30 @@ export const authOptions: AuthOptions = {
     strategy: "jwt",
     maxAge: 60 * 60 * 24,
   },
-  secret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/auth/login",
+    signIn: "/",
   },
   callbacks: {
     async signIn({ account }) {
       try {
-        // Create Google auth credential using id_token
         const googleCredential = GoogleAuthProvider.credential(
           account?.id_token,
         );
 
-        // Sign in with credential
         const userCredential = await signInWithCredential(
           auth,
           googleCredential,
         ).catch(e => {
           console.log(e);
-          return false; // Return false if sign-in fails
+          return false;
         });
 
-        // If sign-in is successful, store user information in Firestore
         if (typeof userCredential !== "boolean") {
           const user = userCredential.user;
 
-          // Firestore document reference for the user
           const userRef = doc(store, "users", user.uid);
 
-          // Set user data in Firestore
           await setDoc(
             userRef,
             {
@@ -57,10 +52,10 @@ export const authOptions: AuthOptions = {
               lastLogin: new Date().toISOString(),
             },
             { merge: true },
-          ); // Merge true ensures only updated fields change
+          );
         }
 
-        return userCredential ? true : false; // Return success or failure
+        return userCredential ? true : false;
       } catch (e) {
         console.log(e);
         return false;

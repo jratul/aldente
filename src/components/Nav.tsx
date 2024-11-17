@@ -25,6 +25,9 @@ export default function Nav() {
                 className="w-10 aspect-square rounded-full"
                 priority
               />
+              <Link href="/write" className="hover:underline">
+                글쓰기
+              </Link>
               <button
                 className="hover:underline"
                 onClick={() => {
@@ -54,18 +57,13 @@ export default function Nav() {
     }
   };
   return (
-    <div className="sticky top-0 z-10 flex h-[50px] items-center justify-between bg-white">
-      <Link href="/" className="text-xl font-bold text-blue-500 font-aldrich">
+    <div className="sticky top-0 z-10 flex h-[50px] items-center justify-start gap-4 bg-white min-w-2xl p-4">
+      <Link
+        href="/"
+        className="text-xl font-bold text-blue-500 font-aldrich grow"
+      >
         Aldente
       </Link>
-      <div className="flex gap-2 flex-grow-1">
-        <Link href="/feed" className="hover:underline">
-          Feed
-        </Link>
-        <Link href="/write" className="hover:underline">
-          Write
-        </Link>
-      </div>
       {userInfo()}
     </div>
   );

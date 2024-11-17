@@ -20,13 +20,14 @@
     ],
     "baseUrl": "src",
     "paths": {
+      "@app/*": ["app/*"],
+      "@api/*": ["app/api/*"],
+      "@fonts/*": ["app/fonts/*"],
+      "@context/*": ["context/*"],
       "@components/*": ["components/*"],
       "@models/*": ["models/*"],
       "@utils/*": ["utils/*"],
-      "@api/*": ["app/api/*"],
-      "@context/*": ["app/context/*"],
-      "@fonts/*": ["app/fonts/*"],
-      "@app/*": ["app/*"]
+      "@hooks/*": ["hooks/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
