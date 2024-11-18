@@ -32,7 +32,7 @@ export default function RootLayout({
     <html lang="ko" className={`${pretendard.variable} ${aldrich.variable}`}>
       <body
         className={
-          "font-pretendard tracking-tight min-w-[300px] max-w-3xl mx-auto"
+          "font-pretendard tracking-tight min-w-[380px] max-w-3xl mx-auto"
         }
       >
         <ClientProvider>
