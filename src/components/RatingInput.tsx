@@ -12,7 +12,7 @@ export default function RatingInput({ rating, setRating }: Props) {
   };
 
   return (
-    <label className="mb-2">
+    <div className="p-4">
       <span className="mb-2 text-gray-700 mr-2">평점</span>
       <input
         type="number"
@@ -23,6 +23,6 @@ export default function RatingInput({ rating, setRating }: Props) {
         onChange={handleRatingChange}
         className="w-20 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-50"
       />
-    </label>
+    </div>
   );
 }

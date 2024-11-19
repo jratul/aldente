@@ -8,6 +8,7 @@ interface Props {
   handleSearch: () => void;
   places: Place[];
   setPos: ({ lat, lng }: Place["pos"]) => void;
+  setSelectedPlace: (selectedPlace: Place) => void;
 }
 
 export default function PlaceSearch({
@@ -16,6 +17,7 @@ export default function PlaceSearch({
   handleSearch,
   places,
   setPos,
+  setSelectedPlace,
 }: Props) {
   return (
     <div className="flex flex-col h-full gap-1">
@@ -55,7 +57,10 @@ export default function PlaceSearch({
             {places.map(place => (
               <div
                 key={place.place_name}
-                onClick={() => setPos(place.pos)}
+                onClick={() => {
+                  setPos(place.pos);
+                  setSelectedPlace(place);
+                }}
                 className="cursor-pointer hover:text-blue-500"
               >
                 {place.place_name}

@@ -27,7 +27,7 @@ export default function ImageUpload() {
   };
 
   return (
-    <div className="my-4">
+    <div className="p-4 h-96">
       <div className="flex justify-between mb-2">
         <span>10장까지 사진을 올릴 수 있어요</span>
         <button onClick={handleClearFiles}>전체 삭제</button>
