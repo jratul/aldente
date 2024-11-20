@@ -118,7 +118,7 @@ export default function KakaoMap({
           </MarkerClusterer>
         </Map>
       </div>
-      <div className="bg-white col-span-1 h-48 md:h-96">
+      <div className="bg-white col-span-1 h-48 md:h-96 m-2">
         <PlaceSearch
           searchText={searchText}
           setSearchText={setSearchText}

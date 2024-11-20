@@ -15,6 +15,7 @@ export default function SlideDown({ children, open }: Props) {
     if (open) {
       requestAnimationFrame(() => {
         setHeight(`${contentRef.current?.scrollHeight}px`);
+        // setHeight("auto");
       });
     } else {
       requestAnimationFrame(() => {

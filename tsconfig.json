@@ -24,10 +24,12 @@
       "@api/*": ["app/api/*"],
       "@fonts/*": ["app/fonts/*"],
       "@context/*": ["context/*"],
+      "@constants/*": ["constants/*"],
       "@components/*": ["components/*"],
       "@models/*": ["models/*"],
       "@utils/*": ["utils/*"],
-      "@hooks/*": ["hooks/*"]
+      "@hooks/*": ["hooks/*"],
+      "@queries/*": ["queries/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

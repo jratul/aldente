@@ -26,7 +26,7 @@ export default function Nav() {
                 priority
               />
               <Link href="/write" className="hover:underline">
-                글쓰기
+                리뷰쓰기
               </Link>
               <button
                 className="hover:underline"

@@ -1,25 +1,30 @@
 "use client";
-import { useState } from "react";
 
 const MAX_IMAGE_COUNT = 10;
 
-export default function ImageUpload() {
-  const [files, setFiles] = useState<File[]>([]);
+interface Props {
+  files: File[];
+  setFilesAction: (files: File[]) => void;
+}
 
+export default function ImageUpload({
+  files,
+  setFilesAction: setFiles,
+}: Props) {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const selectedFiles = Array.from(e.target.files);
       const totalFiles = files.length + selectedFiles.length;
 
-      setFiles(prevFiles => [
-        ...prevFiles,
-        ...selectedFiles.slice(0, MAX_IMAGE_COUNT - prevFiles.length),
+      setFiles([
+        ...files,
+        ...selectedFiles.slice(0, MAX_IMAGE_COUNT - files.length),
       ]);
     }
   };
 
   const handleRemoveFile = (index: number) => {
-    setFiles(prevFiles => prevFiles.filter((_, i) => i !== index));
+    setFiles(files.filter((_, i) => i !== index));
   };
 
   const handleClearFiles = () => {
@@ -27,7 +32,7 @@ export default function ImageUpload() {
   };
 
   return (
-    <div className="p-4 h-96">
+    <div className="p-4 border border-1 rounded m-2">
       <div className="flex justify-between mb-2">
         <span>10장까지 사진을 올릴 수 있어요</span>
         <button onClick={handleClearFiles}>전체 삭제</button>
@@ -41,7 +46,7 @@ export default function ImageUpload() {
             <img
               src={URL.createObjectURL(file)}
               alt={`미리보기 ${index + 1}`}
-              className="object-cover"
+              className="object-cover w-full h-32"
             />
             <button
               onClick={() => handleRemoveFile(index)}
