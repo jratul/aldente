@@ -1,21 +1,22 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { Timestamp } from "firebase/firestore";
 import {
-  QuerySnapshot,
   collection,
   doc,
+  getDoc,
   getDocs,
   limit,
   orderBy,
   setDoc,
   startAfter,
   query,
+  Timestamp,
   where,
 } from "firebase/firestore";
 import { COLLECTIONS } from "@constants/collections";
 import { authOptions } from "@utils/authOptions";
 import { store } from "@utils/firebase";
+import { User } from "@models/user";
 import { Review } from "@models/review";
 
 export async function GET(req: Request) {
@@ -39,16 +40,27 @@ export async function GET(req: Request) {
 
     const reviewsSnapshot = await getDocs(reviewsQuery);
 
-    const items = reviewsSnapshot.docs.map(
-      doc =>
-        ({
-          id: doc.id,
-          ...doc.data(),
+    const items = await Promise.all(
+      reviewsSnapshot.docs.map(async docItem => {
+        const review: Partial<Review> = {
+          id: docItem.id,
+          ...docItem.data(),
           date:
-            doc.data().date instanceof Timestamp
-              ? doc.data().date.toDate()
-              : doc.data().date,
-        }) as Review,
+            docItem.data().date instanceof Timestamp
+              ? docItem.data().date.toDate()
+              : docItem.data().date,
+        };
+
+        const userDoc = await getDoc(
+          doc(store, COLLECTIONS.USERS, review.uid as ""),
+        );
+        const userData = userDoc.data() as User;
+
+        return {
+          ...review,
+          ...userData,
+        };
+      }),
     );
 
     const lastVisible =
@@ -59,7 +71,7 @@ export async function GET(req: Request) {
       lastVisible,
     });
   } catch (error) {
-    console.error("Failed to fetch reviews:", error);
+    console.error("Failed to fetch reviews with user info:", error);
     return NextResponse.json(
       { error: "Failed to fetch reviews" },
       { status: 500 },

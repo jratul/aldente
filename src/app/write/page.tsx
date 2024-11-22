@@ -3,13 +3,13 @@
 import { useRef, useState } from "react";
 import clsx from "clsx";
 import ImageUpload from "@components/ImageUpload";
-import KakaoMap from "@components/KakaoMap";
+import WriteMap from "@components/WriteMap";
 import RatingInput from "@components/RatingInput";
 import PlaceCard from "@components/PlaceCard";
 import Button from "@components/Button";
 import { Place } from "@models/place";
 import useAlertStore from "@hooks/useAlertStore";
-import { useWriteReview } from "@queries/useWriteReview";
+import useWriteReview from "@queries/useWriteReview";
 
 function WritePage() {
   const [rating, setRating] = useState<number>(5);
@@ -43,9 +43,6 @@ function WritePage() {
 
       return;
     }
-
-    console.log(contentRef?.current?.value);
-    console.log(contentRef?.current?.value?.replaceAll("<br>", "\r\n"));
 
     writeReview({
       rating,
@@ -89,7 +86,7 @@ function WritePage() {
           step === 1 && "slide-out-top",
         )}
       >
-        <KakaoMap setSelectedPlaceAction={setSelectedPlace} />
+        <WriteMap setSelectedPlaceAction={setSelectedPlace} />
       </div>
       {step === 1 && selectedPlace && (
         <div className="m-2">

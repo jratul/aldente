@@ -42,7 +42,7 @@ const submitReview = async (
   return response.json();
 };
 
-export const useWriteReview = (): UseMutationResult<
+const useWriteReview = (): UseMutationResult<
   any,
   Error,
   Omit<Review, "id" | "uid" | "date" | "images">
@@ -55,3 +55,5 @@ export const useWriteReview = (): UseMutationResult<
     mutationFn: submitReview,
   });
 };
+
+export default useWriteReview;

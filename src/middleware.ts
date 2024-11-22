@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 
-const protectedRoutes = ["/api/write"];
+const protectedRoutes = ["/write", "/api/write"];
 
 export async function middleware(req: NextRequest) {
   if (protectedRoutes.some(path => req.nextUrl.pathname.startsWith(path))) {

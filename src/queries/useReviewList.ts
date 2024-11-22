@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-const fetchReviews = async ({ pageParam }: { pageParam?: string }) => {
+async function fetchReviewList({ pageParam }: { pageParam?: string }) {
   const url = pageParam
     ? `/api/review?lastVisible=${pageParam}`
     : `/api/review`;
@@ -12,9 +12,9 @@ const fetchReviews = async ({ pageParam }: { pageParam?: string }) => {
   }
 
   return response.json();
-};
+}
 
-export function useReview() {
+function useReviewList() {
   const {
     data,
     hasNextPage = false,
@@ -22,7 +22,7 @@ export function useReview() {
     isFetching,
   } = useInfiniteQuery({
     queryKey: ["review"],
-    queryFn: fetchReviews,
+    queryFn: fetchReviewList,
     getNextPageParam: lastPage => lastPage.lastVisible || undefined,
     initialPageParam: undefined,
   });
@@ -44,3 +44,5 @@ export function useReview() {
     hasNextPage,
   };
 }
+
+export default useReviewList;

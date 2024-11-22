@@ -16,7 +16,7 @@ export default function Nav() {
       case "authenticated":
         return (
           session && (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 text-sm md:text-base">
               <Image
                 width={400}
                 height={400}
@@ -44,7 +44,7 @@ export default function Nav() {
       default:
         return (
           <button
-            className="hover:underline"
+            className="hover:underline text-sm md:text-base"
             onClick={() =>
               signIn("google", {
                 callbackUrl: "/",

@@ -16,7 +16,7 @@ interface Props {
   setSelectedPlaceAction: (selectedPlace: Place) => void;
 }
 
-export default function KakaoMap({
+export default function WriteMap({
   setSelectedPlaceAction: setSelectedPlace,
 }: Props) {
   useKakaoLoader();
@@ -44,8 +44,6 @@ export default function KakaoMap({
         if (status === kakao.maps.services.Status.OK) {
           const bounds = new kakao.maps.LatLngBounds();
           let places: Place[] = [];
-
-          console.log("data", result);
 
           for (let i = 0; i < result.length; i++) {
             places.push({
