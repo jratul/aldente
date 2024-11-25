@@ -4,6 +4,7 @@ import "./globals.css";
 import ClientProvider from "context/ClientProvider";
 import Nav from "@components/Nav";
 import Container from "@components/Container";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Aldente",
@@ -36,6 +37,10 @@ export default function RootLayout({
         }
       >
         <ClientProvider>
+          <Script
+            src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}`}
+            strategy="beforeInteractive"
+          />
           <Nav />
           <Container>{children}</Container>
         </ClientProvider>
