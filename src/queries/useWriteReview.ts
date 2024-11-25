@@ -21,7 +21,7 @@ const uploadImagesToS3 = async (files: File[]): Promise<string[]> => {
   return response.json();
 };
 
-const submitReview = async (review: SubmitReview): Promise<any> => {
+const submitReview = async (review: SubmitReview): Promise<string> => {
   const imageUrls = await uploadImagesToS3(review.imageFiles);
 
   const response = await fetch("/api/review", {
@@ -42,8 +42,8 @@ const submitReview = async (review: SubmitReview): Promise<any> => {
   return response.json();
 };
 
-const useWriteReview = (): UseMutationResult<any, Error, SubmitReview> => {
-  return useMutation<any, Error, SubmitReview>({
+const useWriteReview = (): UseMutationResult<string, Error, SubmitReview> => {
+  return useMutation<string, Error, SubmitReview>({
     mutationFn: submitReview,
   });
 };

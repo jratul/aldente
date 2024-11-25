@@ -21,7 +21,11 @@ async function fetchReview(slug: string): Promise<(Review & User) | null> {
   return res.json();
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const review = await fetchReview(slug);
 

@@ -143,6 +143,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ status: 200 });
   } catch (error) {
+    console.log("Failed to save review ", error);
     return NextResponse.json(
       { error: "Failed to save review" },
       { status: 500 },

@@ -6,12 +6,6 @@ import useKakaoLoader from "@hooks/useKakaoLoader";
 import { Place } from "@models/place";
 import PlaceSearch from "./PlaceSearch";
 
-declare global {
-  interface Window {
-    kakao: any;
-  }
-}
-
 interface Props {
   setSelectedPlaceAction: (selectedPlace: Place) => void;
 }
@@ -43,7 +37,7 @@ export default function WriteMap({
       (result, status) => {
         if (status === kakao.maps.services.Status.OK) {
           const bounds = new kakao.maps.LatLngBounds();
-          let places: Place[] = [];
+          const places: Place[] = [];
 
           for (let i = 0; i < result.length; i++) {
             places.push({
@@ -58,7 +52,7 @@ export default function WriteMap({
               },
               place_url: result[i].place_url,
             });
-            // @ts-ignore
+            // @ts-expect-error: This is expected to throw a type error
             bounds.extend(new kakao.maps.LatLng(result[i].y, result[i].x));
           }
           setPlaces(places);

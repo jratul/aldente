@@ -7,7 +7,7 @@ import { User } from "@models/user";
 
 export async function GET(
   _req: Request,
-  { params }: { params: { slug: string } },
+  { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
   if (!slug) {
@@ -37,6 +37,7 @@ export async function GET(
       ...userData,
     });
   } catch (error) {
+    console.log("Failed to get review data.", error);
     return NextResponse.json(
       {
         error: "Failed to get review data.",

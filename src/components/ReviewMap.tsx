@@ -6,12 +6,6 @@ import { Review } from "@models/review";
 
 type Pos = Review["restaurant"]["pos"];
 
-declare global {
-  interface Window {
-    kakao: any;
-  }
-}
-
 interface Props {
   pos: Pos;
   placeUrl: string;

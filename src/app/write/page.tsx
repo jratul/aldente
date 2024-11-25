@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import ImageUpload from "@components/ImageUpload";
@@ -24,12 +24,7 @@ export default function WritePage() {
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const { openAlert } = useAlertStore();
 
-  const {
-    mutate: writeReview,
-    isPending,
-    isError,
-    isSuccess,
-  } = useWriteReview();
+  const { mutate: writeReview, isPending, isSuccess } = useWriteReview();
 
   const handleSubmit = () => {
     if (
