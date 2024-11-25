@@ -1,9 +1,12 @@
+import clsx from "clsx";
+
 interface Props {
   value: string;
   label?: string;
   placeholder?: string;
   handleChange: (value: string) => void;
-  handleKeyDown: () => void;
+  handleKeyDown?: () => void;
+  className?: string;
 }
 
 function TextField({
@@ -12,15 +15,16 @@ function TextField({
   placeholder = "",
   handleChange,
   handleKeyDown,
+  className,
 }: Props) {
   const handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      handleKeyDown();
+      handleKeyDown?.();
     }
   };
 
   return (
-    <div className="w-full">
+    <div className={clsx("w-full", className)}>
       {label && <span className="text-gray-700 mb-1">{label}</span>}
       <input
         type="text"

@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { Suspense, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import ImageUpload from "@components/ImageUpload";
 import WriteMap from "@components/WriteMap";
@@ -10,12 +11,16 @@ import Button from "@components/Button";
 import { Place } from "@models/place";
 import useAlertStore from "@hooks/useAlertStore";
 import useWriteReview from "@queries/useWriteReview";
+import TextField from "@components/TextField";
+import Loading from "@app/loading";
 
-function WritePage() {
+export default function WritePage() {
+  const router = useRouter();
   const [rating, setRating] = useState<number>(5);
   const [step, setStep] = useState<number>(0);
   const [selectedPlace, setSelectedPlace] = useState<Place>();
   const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [title, setTitle] = useState<string>("");
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const { openAlert } = useAlertStore();
 
@@ -28,9 +33,12 @@ function WritePage() {
 
   const handleSubmit = () => {
     if (
-      !selectedPlace ||
-      imageFiles.length === 0 ||
-      !contentRef?.current?.value
+      !(
+        selectedPlace &&
+        imageFiles.length > 0 &&
+        title &&
+        contentRef?.current?.value
+      )
     ) {
       openAlert({
         title: "잠시만요!",
@@ -47,6 +55,7 @@ function WritePage() {
     writeReview({
       rating,
       imageFiles,
+      title,
       content: JSON.stringify(
         contentRef?.current?.value?.replaceAll("<br>", "\r\n") ?? "",
       ),
@@ -59,20 +68,17 @@ function WritePage() {
         address: selectedPlace.address_name,
         roadAddress: selectedPlace.road_address_name,
         category: selectedPlace.category_name,
+        placeUrl: selectedPlace.place_url,
       },
     });
   };
 
   if (isPending) {
-    return <>전송 중입니다</>;
+    return <Loading />;
   }
 
   if (isSuccess) {
-    return <>리뷰 업데이트가 완료됐어요</>;
-  }
-
-  if (isError) {
-    return <>리뷰 업데이트에 실패했어요</>;
+    router.push("/");
   }
 
   return (
@@ -100,7 +106,9 @@ function WritePage() {
       )}
       {step === 0 && selectedPlace && (
         <div className="m-2">
-          <Button handleClick={() => setStep(1)}>리뷰 쓸게요</Button>
+          <Button handleClick={() => setStep(1)} disabled={!selectedPlace}>
+            {selectedPlace ? "리뷰 쓸게요" : "식당을 선택해 주세요"}
+          </Button>
         </div>
       )}
       <div
@@ -111,9 +119,15 @@ function WritePage() {
       >
         <RatingInput rating={rating} setRating={setRating} />
         <ImageUpload files={imageFiles} setFilesAction={setImageFiles} />
+        <TextField
+          placeholder="당신의 경험을 한 줄로 표현해 주세요."
+          value={title}
+          handleChange={setTitle}
+          className="px-2"
+        />
         <div className="flex justify-center">
           <textarea
-            className="w-full h-48 p-4 m-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full h-48 p-3 m-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="무엇을 공유할까요?"
             ref={contentRef}
           />
@@ -125,5 +139,3 @@ function WritePage() {
     </div>
   );
 }
-
-export default WritePage;

@@ -5,6 +5,7 @@ export interface Review {
   rating: number;
   images: string[];
   imageFiles: File[];
+  title: string;
   content: string;
   restaurant: {
     name: string;
@@ -15,5 +16,6 @@ export interface Review {
     address: string;
     roadAddress: string;
     category: string;
+    placeUrl: string;
   };
 }

@@ -128,15 +128,13 @@ export async function POST(req: Request) {
 
   const body = await req.json();
 
-  console.log(body.content);
-  console.log(JSON.parse(body.content));
-
   try {
     const review = {
       uid: userUid,
       date: new Date(),
       rating: body.rating,
       images: body.images,
+      title: body.title,
       content: body.content,
       restaurant: body.restaurant,
     };

@@ -1,6 +1,8 @@
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { Review } from "@models/review";
 
+type SubmitReview = Omit<Review, "id" | "uid" | "date" | "images">;
+
 const uploadImagesToS3 = async (files: File[]): Promise<string[]> => {
   const formData = new FormData();
   files.forEach(file => {
@@ -19,9 +21,7 @@ const uploadImagesToS3 = async (files: File[]): Promise<string[]> => {
   return response.json();
 };
 
-const submitReview = async (
-  review: Omit<Review, "id" | "uid" | "date" | "images">,
-): Promise<any> => {
+const submitReview = async (review: SubmitReview): Promise<any> => {
   const imageUrls = await uploadImagesToS3(review.imageFiles);
 
   const response = await fetch("/api/review", {
@@ -42,16 +42,8 @@ const submitReview = async (
   return response.json();
 };
 
-const useWriteReview = (): UseMutationResult<
-  any,
-  Error,
-  Omit<Review, "id" | "uid" | "date" | "images">
-> => {
-  return useMutation<
-    any,
-    Error,
-    Omit<Review, "id" | "uid" | "date" | "images">
-  >({
+const useWriteReview = (): UseMutationResult<any, Error, SubmitReview> => {
+  return useMutation<any, Error, SubmitReview>({
     mutationFn: submitReview,
   });
 };

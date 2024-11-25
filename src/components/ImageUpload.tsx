@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef } from "react";
+
 const MAX_IMAGE_COUNT = 10;
 
 interface Props {
@@ -11,10 +13,14 @@ export default function ImageUpload({
   files,
   setFilesAction: setFiles,
 }: Props) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.files);
     if (e.target.files) {
       const selectedFiles = Array.from(e.target.files);
-      const totalFiles = files.length + selectedFiles.length;
+
+      console.log(selectedFiles);
 
       setFiles([
         ...files,
@@ -29,6 +35,9 @@ export default function ImageUpload({
 
   const handleClearFiles = () => {
     setFiles([]);
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
   };
 
   return (
@@ -66,6 +75,7 @@ export default function ImageUpload({
                 multiple
                 onChange={handleFileChange}
                 className="hidden"
+                ref={inputRef}
               />
             </label>
           </div>

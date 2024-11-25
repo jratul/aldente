@@ -3107,6 +3107,7 @@ __metadata:
     react-dom: "npm:19.0.0-rc-66855b96-20241106"
     react-infinite-scroll-component: "npm:^6.1.0"
     react-kakao-maps-sdk: "npm:^1.1.27"
+    swiper: "npm:^11.1.15"
     tailwindcss: "npm:^3.4.1"
     typescript: "npm:^5"
     uuid: "npm:^11.0.3"
@@ -7262,6 +7263,13 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: 10c0/6c4032340701a9950865f7ae8ef38578d8d7053f5e10518076e6554a9381fa91bd9c6850193695c141f32b21f979c985db07265a758867bac95de05f7d8aeb39
+  languageName: node
+  linkType: hard
+
+"swiper@npm:^11.1.15":
+  version: 11.1.15
+  resolution: "swiper@npm:11.1.15"
+  checksum: 10c0/3faabc5b33c0663513e8e41c4ef7920d4c9a1ca6b988848f2e51e1db0d01471a1bae22fce3177b9d3ab2c128fc6df23074415ae7957bd0f8542fd7387fa5263d
   languageName: node
   linkType: hard
 
