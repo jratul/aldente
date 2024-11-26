@@ -42,7 +42,7 @@ export default function RootLayout({
         </ClientProvider>
         <Script
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}&libraries=clusterer,drawing,services&autoload=false`}
-          strategy="beforeInteractive"
+          // strategy="beforeInteractive"
           onError={(e: Error) => {
             console.error("Script failed to load", e);
           }}
