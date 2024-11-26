@@ -20,7 +20,7 @@ export default function ReviewMap({ pos, placeUrl }: Props) {
   });
 
   if (error) {
-    console.log("kakao map error:", error);
+    console.log("kakao map error:", error, error.message);
   }
 
   const handleClick = () => {
