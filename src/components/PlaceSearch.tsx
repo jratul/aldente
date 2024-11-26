@@ -1,4 +1,4 @@
-import TextField from "./TextField";
+import TextField from "./shared/TextField";
 import EmptySign from "./EmptySign";
 import { Place } from "@models/place";
 

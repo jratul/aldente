@@ -1,4 +1,4 @@
-import BackButton from "@components/BackButton";
+import BackButton from "@components/shared/BackButton";
 import ImageSwiper from "@components/ImageSwiper";
 import RestaurantCard from "@components/RestaurantCard";
 import ReviewMap from "@components/ReviewMap";

@@ -7,11 +7,11 @@ import ImageUpload from "@components/ImageUpload";
 import WriteMap from "@components/WriteMap";
 import RatingInput from "@components/RatingInput";
 import PlaceCard from "@components/PlaceCard";
-import Button from "@components/Button";
+import Button from "@components/shared/Button";
 import { Place } from "@models/place";
 import useAlertStore from "@hooks/useAlertStore";
 import useWriteReview from "@queries/useWriteReview";
-import TextField from "@components/TextField";
+import TextField from "@components/shared/TextField";
 import Loading from "@app/loading";
 
 export default function WritePage() {

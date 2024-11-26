@@ -2,7 +2,7 @@
 
 import { SessionProvider } from "next-auth/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Alert from "@components/Alert";
+import Alert from "@components/shared/Alert";
 
 const queryClient = new QueryClient();
 

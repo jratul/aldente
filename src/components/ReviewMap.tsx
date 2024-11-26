@@ -1,7 +1,7 @@
 "use client";
 
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import useKakaoLoader from "@hooks/useKakaoLoader";
+// import useKakaoLoader from "@hooks/useKakaoLoader";
 import { Review } from "@models/review";
 
 type Pos = Review["restaurant"]["pos"];
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function ReviewMap({ pos, placeUrl }: Props) {
-  useKakaoLoader();
+  // useKakaoLoader();
 
   const handleClick = () => {
     window.open(placeUrl, "_blank", "noopener,noreferrer");
