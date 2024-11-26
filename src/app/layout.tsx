@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import localFont from "next/font/local";
 import "./globals.css";
-import ClientProvider from "context/ClientProvider";
+import ClientProvider from "@context/ClientProvider";
 import Nav from "@components/shared/Nav";
 import Container from "@components/shared/Container";
 
@@ -39,6 +40,10 @@ export default function RootLayout({
           <Nav />
           <Container>{children}</Container>
         </ClientProvider>
+        <Script
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}&libraries=clusterer,drawing,services&autoload=false`}
+          strategy="beforeInteractive"
+        />
       </body>
     </html>
   );

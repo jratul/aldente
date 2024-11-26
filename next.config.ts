@@ -16,7 +16,6 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        // matching all API routes
         source: "/api/:path*",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
@@ -33,7 +32,7 @@ const nextConfig: NextConfig = {
         ],
       },
     ];
-  }
+  },
 };
 
 export default nextConfig;

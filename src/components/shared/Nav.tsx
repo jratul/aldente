@@ -7,10 +7,6 @@ import Image from "next/image";
 export default function Nav() {
   const { data: session, status } = useSession();
 
-  if (status === "loading") {
-    return null;
-  }
-
   const userInfo = () => {
     switch (status) {
       case "authenticated":
