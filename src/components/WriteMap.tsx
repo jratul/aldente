@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Map, MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
-import useKakaoLoader from "@hooks/useKakaoLoader";
+// import useKakaoLoader from "@hooks/useKakaoLoader";
 import { Place } from "@models/place";
 import PlaceSearch from "./PlaceSearch";
 
@@ -13,7 +13,7 @@ interface Props {
 export default function WriteMap({
   setSelectedPlaceAction: setSelectedPlace,
 }: Props) {
-  useKakaoLoader();
+  // useKakaoLoader();
 
   const [map, setMap] = useState<kakao.maps.Map>();
   const [pos, setPos] = useState<Place["pos"]>({
