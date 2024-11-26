@@ -2,8 +2,8 @@
 
 // import Script from "next/script";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-// import useKakaoLoader from "@hooks/useKakaoLoader";
-import { useKakaoLoader } from "react-kakao-maps-sdk";
+import useKakaoLoader from "@hooks/useKakaoLoader";
+// import { useKakaoLoader } from "react-kakao-maps-sdk";
 import { Review } from "@models/review";
 
 type Pos = Review["restaurant"]["pos"];
@@ -14,10 +14,11 @@ interface Props {
 }
 
 export default function ReviewMap({ pos, placeUrl }: Props) {
-  useKakaoLoader({
-    appkey: process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY ?? "",
-    libraries: ["clusterer", "drawing", "services"],
-  });
+  // useKakaoLoader({
+  //   appkey: process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY ?? "",
+  //   libraries: ["clusterer", "drawing", "services"],
+  // });
+  useKakaoLoader();
 
   const handleClick = () => {
     window.open(placeUrl, "_blank", "noopener,noreferrer");
