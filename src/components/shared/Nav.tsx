@@ -54,12 +54,11 @@ export default function Nav() {
   };
   return (
     <div className="sticky top-0 z-10 flex h-[50px] items-center justify-start gap-4 bg-white min-w-2xl p-4">
-      <Link
-        href="/"
-        className="text-xl font-bold text-blue-500 font-aldrich grow"
-      >
-        Aldente
-      </Link>
+      <div className="grow">
+        <Link href="/" className="text-xl font-bold text-blue-500 font-aldrich">
+          Aldente
+        </Link>
+      </div>
       {userInfo()}
     </div>
   );
