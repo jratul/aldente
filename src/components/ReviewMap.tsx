@@ -1,5 +1,6 @@
 "use client";
 
+import Script from "next/script";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 // import useKakaoLoader from "@hooks/useKakaoLoader";
 import { Review } from "@models/review";
@@ -20,6 +21,13 @@ export default function ReviewMap({ pos, placeUrl }: Props) {
 
   return (
     <div className="w-full h-48 md:h-96">
+      <Script
+        src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}&libraries=clusterer,drawing,services&autoload=false`}
+        // strategy="beforeInteractive"
+        onError={(e: Error) => {
+          console.error("Script failed to load", e);
+        }}
+      />
       <Map center={pos} level={3} className="w-full h-48 md:h-96">
         <MapMarker
           position={{
