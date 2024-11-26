@@ -31,15 +31,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${pretendard.variable} ${aldrich.variable}`}>
+      <head>
+        <Script
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}&libraries=clusterer,drawing,services&autoload=false`}
+          strategy="beforeInteractive"
+        />
+      </head>
       <body
         className={
           "font-pretendard tracking-tight min-w-[380px] max-w-3xl mx-auto"
         }
       >
-        <Script
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}&libraries=clusterer,drawing,services&autoload=false`}
-          strategy="beforeInteractive"
-        />
         <ClientProvider>
           <Nav />
           <Container>{children}</Container>
