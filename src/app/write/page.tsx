@@ -16,7 +16,7 @@ import Loading from "@app/loading";
 
 export default function WritePage() {
   const router = useRouter();
-  const [rating, setRating] = useState<number>(5);
+  const [rating, setRating] = useState<number>(5.0);
   const [step, setStep] = useState<number>(0);
   const [selectedPlace, setSelectedPlace] = useState<Place>();
   const [imageFiles, setImageFiles] = useState<File[]>([]);

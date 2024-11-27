@@ -90,7 +90,7 @@ export default function WriteMap({
           <MarkerClusterer averageCenter={true} minLevel={5}>
             {places.map(place => (
               <MapMarker
-                key={place.place_name}
+                key={`${place.place_name}${place.pos.lat}${place.pos.lng}`}
                 position={{
                   lat: place.pos.lat,
                   lng: place.pos.lng,

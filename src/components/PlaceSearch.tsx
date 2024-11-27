@@ -56,7 +56,7 @@ export default function PlaceSearch({
           <>
             {places.map(place => (
               <div
-                key={place.place_name}
+                key={`${place.place_name}${place.pos.lat}${place.pos.lng}`}
                 onClick={() => {
                   setPos(place.pos);
                   setSelectedPlace(place);
