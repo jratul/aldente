@@ -18,7 +18,7 @@ export default function ReviewItem({ review }: Props) {
   };
 
   return (
-    <div className="my-2 cursor-pointer bg-white py-2" onClick={handleClick}>
+    <div className="mb-2 cursor-pointer bg-white py-2" onClick={handleClick}>
       <UserCard
         photoURL={review.photoURL}
         displayName={review.displayName}

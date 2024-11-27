@@ -47,7 +47,9 @@ export default async function Page({
       />
       <RestaurantCard review={review} />
       <div className="text-lg font-bold my-2">{review.title}</div>
-      <div className="mb-4 text-gray-600">{JSON.parse(review.content)}</div>
+      <div className="mb-4 text-gray-600 whitespace-pre">
+        {JSON.parse(review.content)}
+      </div>
       <ReviewMap
         pos={review.restaurant.pos}
         placeUrl={review.restaurant.placeUrl}

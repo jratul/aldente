@@ -37,7 +37,7 @@ export default function Nav() {
             </div>
           )
         );
-      default:
+      case "unauthenticated":
         return (
           <button
             className="hover:underline text-sm md:text-base"
@@ -50,6 +50,8 @@ export default function Nav() {
             로그인
           </button>
         );
+      default:
+        return null;
     }
   };
   return (

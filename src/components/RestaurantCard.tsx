@@ -3,7 +3,7 @@ import { Review } from "@models/review";
 export default function RestaurantCard({ review }: { review: Review }) {
   return (
     <div className="flex flex-col p-3">
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
         <div className="text-lg md:text-2xl font-bold">
           {review.restaurant.name}
         </div>

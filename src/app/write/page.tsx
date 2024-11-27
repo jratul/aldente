@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import ImageUpload from "@components/ImageUpload";
@@ -68,12 +68,14 @@ export default function WritePage() {
     });
   };
 
+  useEffect(() => {
+    if (isSuccess) {
+      router.push("/");
+    }
+  }, [isSuccess, router]);
+
   if (isPending) {
     return <Loading />;
-  }
-
-  if (isSuccess) {
-    router.push("/");
   }
 
   return (

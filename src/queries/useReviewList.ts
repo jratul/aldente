@@ -1,10 +1,10 @@
 import { useCallback } from "react";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
 async function fetchReviewList({ pageParam }: { pageParam?: string }) {
   const url = pageParam
-    ? `/api/review?lastVisible=${pageParam}`
-    : `/api/review`;
+    ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/review?lastVisible=${pageParam}`
+    : `${process.env.NEXT_PUBLIC_BASE_URL}/api/review`;
 
   const response = await fetch(url);
   if (!response.ok) {
@@ -20,10 +20,11 @@ function useReviewList() {
     hasNextPage = false,
     fetchNextPage,
     isFetching,
-  } = useInfiniteQuery({
+  } = useSuspenseInfiniteQuery({
     queryKey: ["review"],
     queryFn: fetchReviewList,
-    getNextPageParam: lastPage => lastPage.lastVisible || undefined,
+    getNextPageParam: lastPage =>
+      lastPage.hasMore ? lastPage.lastVisible : null,
     initialPageParam: undefined,
   });
 
