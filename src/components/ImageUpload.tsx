@@ -16,7 +16,6 @@ export default function ImageUpload({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.files);
     if (e.target.files) {
       const selectedFiles = Array.from(e.target.files);
 

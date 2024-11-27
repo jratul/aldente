@@ -15,18 +15,14 @@ async function fetchReviewList({ pageParam }: { pageParam?: string }) {
 }
 
 function useReviewList() {
-  const {
-    data,
-    hasNextPage = false,
-    fetchNextPage,
-    isFetching,
-  } = useSuspenseInfiniteQuery({
-    queryKey: ["review"],
-    queryFn: fetchReviewList,
-    getNextPageParam: lastPage =>
-      lastPage.hasMore ? lastPage.lastVisible : null,
-    initialPageParam: undefined,
-  });
+  const { data, hasNextPage, fetchNextPage, isFetching } =
+    useSuspenseInfiniteQuery({
+      queryKey: ["review"],
+      queryFn: fetchReviewList,
+      getNextPageParam: lastPage =>
+        lastPage.hasMore ? lastPage.lastVisible : null,
+      initialPageParam: undefined,
+    });
 
   const loadMore = useCallback(() => {
     if (!hasNextPage || isFetching) {

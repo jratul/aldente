@@ -14,16 +14,14 @@ export default function ReviewList() {
   }
 
   return (
-    <div>
-      <InfiniteScroll
-        dataLength={data?.length ?? 0}
-        hasMore={hasNextPage}
-        loader={<Loader />}
-        next={loadMore}
-        scrollThreshold="100px"
-      >
-        {data?.map((review, idx) => <ReviewItem review={review} key={idx} />)}
-      </InfiniteScroll>
-    </div>
+    <InfiniteScroll
+      dataLength={data?.length ?? 0}
+      hasMore={hasNextPage}
+      loader={<Loader />}
+      next={loadMore}
+      scrollThreshold="100px"
+    >
+      {data?.map((review, idx) => <ReviewItem review={review} key={idx} />)}
+    </InfiniteScroll>
   );
 }

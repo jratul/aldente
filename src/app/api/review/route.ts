@@ -24,19 +24,33 @@ export async function GET(req: Request) {
   const lastVisibleId = searchParams.get("lastVisible");
 
   try {
-    const reviewsQuery =
-      lastVisibleId == null
-        ? query(
-            collection(store, COLLECTIONS.REVIEWS),
-            orderBy("date", "desc"),
-            limit(5),
-          )
-        : query(
-            collection(store, COLLECTIONS.REVIEWS),
-            orderBy("date", "desc"),
-            startAfter(lastVisibleId),
-            limit(5),
-          );
+    let reviewsQuery;
+
+    if (!lastVisibleId) {
+      reviewsQuery = query(
+        collection(store, COLLECTIONS.REVIEWS),
+        orderBy("date", "desc"),
+        limit(5),
+      );
+    } else {
+      const lastVisibleDoc = await getDoc(
+        doc(store, COLLECTIONS.REVIEWS, lastVisibleId),
+      );
+
+      if (!lastVisibleDoc.exists()) {
+        return NextResponse.json(
+          { error: "Invalid lastVisible parameter" },
+          { status: 400 },
+        );
+      }
+
+      reviewsQuery = query(
+        collection(store, COLLECTIONS.REVIEWS),
+        orderBy("date", "desc"),
+        startAfter(lastVisibleDoc),
+        limit(5),
+      );
+    }
 
     const reviewsSnapshot = await getDocs(reviewsQuery);
 
@@ -69,6 +83,7 @@ export async function GET(req: Request) {
     return NextResponse.json({
       items,
       lastVisible,
+      hasMore: reviewsSnapshot.docs.length > 0,
     });
   } catch (error) {
     console.error("Failed to fetch reviews with user info:", error);
