@@ -29,13 +29,13 @@ export async function GET(req: Request) {
         ? query(
             collection(store, COLLECTIONS.REVIEWS),
             orderBy("date", "desc"),
-            limit(10),
+            limit(5),
           )
         : query(
             collection(store, COLLECTIONS.REVIEWS),
             orderBy("date", "desc"),
             startAfter(lastVisibleId),
-            limit(10),
+            limit(5),
           );
 
     const reviewsSnapshot = await getDocs(reviewsQuery);
