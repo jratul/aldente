@@ -20,8 +20,6 @@ export default function ImageUpload({
     if (e.target.files) {
       const selectedFiles = Array.from(e.target.files);
 
-      console.log(selectedFiles);
-
       setFiles([
         ...files,
         ...selectedFiles.slice(0, MAX_IMAGE_COUNT - files.length),

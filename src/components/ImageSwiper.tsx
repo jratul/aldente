@@ -20,7 +20,6 @@ export default function ImageSwiper({ images, restaurantName }: Props) {
       loop
       navigation
       pagination={{ clickable: true }}
-      className="h-[600px]"
     >
       {images.map((img, idx) => (
         <SwiperSlide key={idx}>
