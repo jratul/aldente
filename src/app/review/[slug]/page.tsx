@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import BackButton from "@components/shared/BackButton";
 import ImageSwiper from "@components/ImageSwiper";
 import RestaurantCard from "@components/RestaurantCard";
@@ -12,10 +13,7 @@ async function fetchReview(slug: string): Promise<(Review & User) | null> {
   );
 
   if (!res.ok) {
-    if (res.status === 404) {
-      return null;
-    }
-    throw new Error("Failed to fetch review");
+    return null;
   }
 
   return res.json();
@@ -30,7 +28,7 @@ export default async function Page({
   const review = await fetchReview(slug);
 
   if (!review) {
-    throw new Error("Review data is missing");
+    redirect("/404");
   }
 
   return (

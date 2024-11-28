@@ -3110,6 +3110,7 @@ __metadata:
     firebase: "npm:^11.0.1"
     firebase-admin: "npm:^12.7.0"
     kakao.maps.d.ts: "npm:^0.1.40"
+    motion: "npm:^11.12.0"
     next: "npm:15.0.3"
     next-auth: "npm:^4.24.10"
     postcss: "npm:^8"
@@ -4614,6 +4615,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"framer-motion@npm:^11.12.0":
+  version: 11.12.0
+  resolution: "framer-motion@npm:11.12.0"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    "@emotion/is-prop-valid": "*"
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  peerDependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 10c0/9d1cfa356f5230b9bbed2107cbef50d38a7afa4c9d03fc7820c8d7bd8be697046af0e5b45f01d926c6b784f789858ad683afb361073271f826e63f29af4b05fb
+  languageName: node
+  linkType: hard
+
 "fs-minipass@npm:^2.0.0":
   version: 2.1.0
   resolution: "fs-minipass@npm:2.1.0"
@@ -5910,6 +5931,27 @@ __metadata:
   bin:
     mkdirp: bin/cmd.js
   checksum: 10c0/46ea0f3ffa8bc6a5bc0c7081ffc3907777f0ed6516888d40a518c5111f8366d97d2678911ad1a6882bf592fa9de6c784fea32e1687bb94e1f4944170af48a5cf
+  languageName: node
+  linkType: hard
+
+"motion@npm:^11.12.0":
+  version: 11.12.0
+  resolution: "motion@npm:11.12.0"
+  dependencies:
+    framer-motion: "npm:^11.12.0"
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    "@emotion/is-prop-valid": "*"
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  peerDependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 10c0/434a9523e58788d4e1a7032533491b1a4452bdc5d056a0ae22718861bbe6d9bc67fadea9e15d55db4a897d2c06a463ec522f315d2e5c3efa924d4bc467b901a2
   languageName: node
   linkType: hard
 
