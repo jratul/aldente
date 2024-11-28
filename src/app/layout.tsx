@@ -30,15 +30,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${pretendard.variable} ${aldrich.variable}`}>
-      <body
-        className={
-          "font-pretendard tracking-tight min-w-[380px] max-w-3xl mx-auto"
-        }
-      >
-        <ClientProvider>
-          <Nav />
-          <Container>{children}</Container>
-        </ClientProvider>
+      <body className={"font-pretendard tracking-tight"}>
+        <div className="min-w-[380px] max-w-3xl mx-auto">
+          <ClientProvider>
+            <Nav />
+            <Container>{children}</Container>
+          </ClientProvider>
+        </div>
       </body>
     </html>
   );

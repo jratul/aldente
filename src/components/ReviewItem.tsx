@@ -6,6 +6,7 @@ import { Review } from "@models/review";
 import { User } from "@models/user";
 import RestaurantCard from "./RestaurantCard";
 import UserCard from "./UserCard";
+import Image from "next/image";
 
 interface Props {
   review: Review & User;
@@ -31,10 +32,13 @@ export default function ReviewItem({ review }: Props) {
           date={review.date}
         />
         <div className="relative aspect-[4/3] w-full">
-          <img
+          <Image
             src={review.images[0]}
             alt={review.restaurant.name}
             className="aspect-[4/3] w-full object-cover"
+            width={800}
+            height={600}
+            priority
           />
           <div
             aria-hidden="true"

@@ -6,7 +6,7 @@ import ReviewItem from "@components/ReviewItem";
 import Loader from "./shared/Loader";
 
 export default function ReviewList() {
-  const { data, hasNextPage, loadMore, isFetching } = useReviewList();
+  const { data, hasNextPage, loadMore } = useReviewList();
 
   return (
     <InfiniteScroll
@@ -15,7 +15,7 @@ export default function ReviewList() {
       loader={<Loader />}
       next={loadMore}
       scrollThreshold="100px"
-      pullDownToRefresh={false}
+      // pullDownToRefresh={false}
     >
       {data?.map((review, idx) => <ReviewItem review={review} key={idx} />)}
     </InfiniteScroll>
