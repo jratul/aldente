@@ -6,7 +6,11 @@ import ReviewItem from "@components/ReviewItem";
 import Loader from "./shared/Loader";
 
 export default function ReviewList() {
-  const { data, hasNextPage, loadMore } = useReviewList();
+  const { data, error, hasNextPage, loadMore } = useReviewList();
+
+  if (error) {
+    throw Error("리뷰 목록을 가져오는 데 실패했습니다.");
+  }
 
   return (
     <InfiniteScroll

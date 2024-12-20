@@ -15,7 +15,7 @@ async function fetchReviewList({ pageParam }: { pageParam?: string }) {
 }
 
 function useReviewList() {
-  const { data, hasNextPage, fetchNextPage, isFetching } =
+  const { data, error, hasNextPage, fetchNextPage, isFetching } =
     useSuspenseInfiniteQuery({
       queryKey: ["review"],
       queryFn: fetchReviewList,
@@ -39,6 +39,7 @@ function useReviewList() {
     loadMore,
     isFetching,
     hasNextPage,
+    error,
   };
 }
 
