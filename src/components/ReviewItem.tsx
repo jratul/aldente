@@ -10,14 +10,17 @@ import Image from "next/image";
 
 interface Props {
   review: Review & User;
+  priority?: boolean;
 }
 
-export default function ReviewItem({ review }: Props) {
+export default function ReviewItem({ review, priority = false }: Props) {
   const router = useRouter();
 
   const handleClick = () => {
     router.push(`/review/${review.id}`);
   };
+
+  const firstLine = JSON.parse(review.content).split("\n")[0];
 
   return (
     <motion.div
@@ -38,7 +41,7 @@ export default function ReviewItem({ review }: Props) {
             className="aspect-[4/3] w-full object-cover"
             width={800}
             height={600}
-            priority
+            priority={priority}
           />
           <div
             aria-hidden="true"
@@ -49,7 +52,7 @@ export default function ReviewItem({ review }: Props) {
               "{review.title}"
             </div>
             <div className="whitespace-pre-wrap text-sm text-white md:text-base">
-              {JSON.parse(review.content).split("\n")[0]}
+              {firstLine}
             </div>
           </div>
         </div>

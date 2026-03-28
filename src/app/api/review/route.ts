@@ -54,28 +54,27 @@ export async function GET(req: Request) {
 
     const reviewsSnapshot = await getDocs(reviewsQuery);
 
-    const items = await Promise.all(
-      reviewsSnapshot.docs.map(async docItem => {
-        const review: Partial<Review> = {
-          id: docItem.id,
-          ...docItem.data(),
-          date:
-            docItem.data().date instanceof Timestamp
-              ? docItem.data().date.toDate()
-              : docItem.data().date,
-        };
+    const reviews: Partial<Review>[] = reviewsSnapshot.docs.map(docItem => ({
+      id: docItem.id,
+      ...docItem.data(),
+      date:
+        docItem.data().date instanceof Timestamp
+          ? docItem.data().date.toDate()
+          : docItem.data().date,
+    }));
 
-        const userDoc = await getDoc(
-          doc(store, COLLECTIONS.USERS, review.uid as ""),
-        );
-        const userData = userDoc.data() as User;
-
-        return {
-          ...review,
-          ...userData,
-        };
-      }),
+    const uniqueUids = [...new Set(reviews.map(r => r.uid as string))];
+    const userDocs = await Promise.all(
+      uniqueUids.map(uid => getDoc(doc(store, COLLECTIONS.USERS, uid))),
     );
+    const userMap = Object.fromEntries(
+      userDocs.map(d => [d.id, d.data() as User]),
+    );
+
+    const items = reviews.map(review => ({
+      ...review,
+      ...userMap[review.uid as string],
+    }));
 
     const lastVisible =
       reviewsSnapshot.docs[reviewsSnapshot.docs.length - 1]?.id;
@@ -83,7 +82,7 @@ export async function GET(req: Request) {
     return NextResponse.json({
       items,
       lastVisible,
-      hasMore: reviewsSnapshot.docs.length > 0,
+      hasMore: reviewsSnapshot.docs.length === 5,
     });
   } catch (error) {
     console.error("Failed to fetch reviews with user info:", error);

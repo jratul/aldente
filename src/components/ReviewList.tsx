@@ -21,7 +21,9 @@ export default function ReviewList() {
       scrollThreshold="100px"
       // pullDownToRefresh={false}
     >
-      {data?.map((review, idx) => <ReviewItem review={review} key={idx} />)}
+      {data?.map((review, idx) => (
+        <ReviewItem review={review} key={review.id} priority={idx < 2} />
+      ))}
     </InfiniteScroll>
   );
 }

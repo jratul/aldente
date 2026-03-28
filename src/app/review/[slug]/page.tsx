@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import BackButton from "@components/shared/BackButton";
 import ImageSwiper from "@components/ImageSwiper";
 import RestaurantCard from "@components/RestaurantCard";
@@ -28,7 +28,7 @@ export default async function Page({
   const review = await fetchReview(slug);
 
   if (!review) {
-    redirect("/404");
+    notFound();
   }
 
   return (
