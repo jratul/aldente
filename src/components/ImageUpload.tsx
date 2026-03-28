@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef } from "react";
+import Image from "next/image";
 
 const MAX_IMAGE_COUNT = 10;
 
@@ -60,10 +61,12 @@ export default function ImageUpload({
             key={url}
             className="relative w-full h-32 overflow-hidden rounded border"
           >
-            <img
+            <Image
+              fill
               src={url}
               alt={`미리보기 ${index + 1}`}
-              className="object-cover w-full h-32"
+              className="object-cover"
+              unoptimized
             />
             <button
               onClick={() => handleRemoveFile(index)}

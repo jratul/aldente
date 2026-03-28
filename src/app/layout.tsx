@@ -12,14 +12,14 @@ export const metadata: Metadata = {
 
 const pretendard = localFont({
   src: "./fonts/PretendardVariable.woff2",
-  display: "swap",
+  display: "optional",
   weight: "45 920",
   variable: "--font-pretendard",
 });
 
 const aldrich = localFont({
   src: "./fonts/Aldrich-Regular.ttf",
-  display: "swap",
+  display: "optional",
   variable: "--font-aldrich",
 });
 

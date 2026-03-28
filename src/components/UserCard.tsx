@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { format } from "date-fns";
 
 interface Props {
@@ -10,12 +11,14 @@ export default function UserCard({ photoURL, displayName, date }: Props) {
   return (
     <div className="flex items-center justify-between p-2">
       <div className="flex items-center gap-2">
-        <img
+        <Image
           src={
             photoURL ??
             "https://cdn4.iconfinder.com/data/icons/music-ui-solid-24px/24/user_account_profile-2-64.png"
           }
           alt="userImage"
+          width={48}
+          height={48}
           className="h-8 w-8 md:h-12 md:w-12 rounded-full"
         />
         <div>{displayName}</div>

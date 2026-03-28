@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Review } from "@models/review";
 
 export default function RestaurantCard({ review }: { review: Review }) {
@@ -12,8 +13,9 @@ export default function RestaurantCard({ review }: { review: Review }) {
         </div>
       </div>
       <div className="flex items-center gap-1 align-text-top">
-        <img
+        <Image
           src="https://cdn1.iconfinder.com/data/icons/christmas-yellow/60/019_-_Star-64.png"
+          alt="별점"
           width={15}
           height={15}
         />
