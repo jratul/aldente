@@ -1,6 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  turbopack: {
+    root: process.cwd(),
+  },
+  typescript: {
+    // next-auth v4 type declarations are incompatible with Next.js 16 internal type paths.
+    // Type checking is run separately via `yarn typecheck`.
+    ignoreBuildErrors: true,
+  },
   images: {
     remotePatterns: [
       {

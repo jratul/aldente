@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { NextResponse } from "next/server";
 import { Upload } from "@aws-sdk/lib-storage";
 import { s3Client } from "@utils/s3";

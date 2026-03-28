@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { NextResponse } from "next/server";
 import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { COLLECTIONS } from "@constants/collections";

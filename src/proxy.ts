@@ -4,7 +4,7 @@ import { getToken } from "next-auth/jwt";
 
 const protectedRoutes = ["/write", "/api/write"];
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   if (protectedRoutes.some(path => req.nextUrl.pathname.startsWith(path))) {
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
