@@ -7,13 +7,13 @@ export async function POST(req: Request) {
   const files = formData.getAll("files") as File[];
 
   try {
-    const uploadPromises = files.map(file => {
+    const uploadPromises = files.map(async file => {
       const upload = new Upload({
         client: s3Client,
         params: {
           Bucket: process.env.AWS_S3_BUCKET_NAME!,
           Key: `${Date.now()}-${file.name}`,
-          Body: file.stream(),
+          Body: Buffer.from(await file.arrayBuffer()),
           ContentType: file.type,
         },
       });

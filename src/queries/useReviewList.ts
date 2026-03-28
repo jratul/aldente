@@ -22,6 +22,7 @@ function useReviewList() {
       getNextPageParam: lastPage =>
         lastPage.hasMore ? lastPage.lastVisible : null,
       initialPageParam: undefined,
+      staleTime: 1000 * 60 * 5,
     });
 
   const loadMore = useCallback(() => {

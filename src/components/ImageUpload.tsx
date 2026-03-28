@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 const MAX_IMAGE_COUNT = 10;
 
@@ -14,6 +14,17 @@ export default function ImageUpload({
   setFilesAction: setFiles,
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const previewUrls = useMemo(
+    () => files.map(f => URL.createObjectURL(f)),
+    [files],
+  );
+
+  useEffect(() => {
+    return () => {
+      previewUrls.forEach(url => URL.revokeObjectURL(url));
+    };
+  }, [previewUrls]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -44,13 +55,13 @@ export default function ImageUpload({
         <button onClick={handleClearFiles}>전체 삭제</button>
       </div>
       <div className="grid grid-cols-3 md:grid-cols-5 gap-4">
-        {files.map((file, index) => (
+        {previewUrls.map((url, index) => (
           <div
-            key={index}
+            key={url}
             className="relative w-full h-32 overflow-hidden rounded border"
           >
             <img
-              src={URL.createObjectURL(file)}
+              src={url}
               alt={`미리보기 ${index + 1}`}
               className="object-cover w-full h-32"
             />
