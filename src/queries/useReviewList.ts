@@ -2,9 +2,13 @@ import { useCallback } from "react";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
 async function fetchReviewList({ pageParam }: { pageParam?: string }) {
+  const baseUrl =
+    typeof window === "undefined"
+      ? (process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000")
+      : "";
   const url = pageParam
-    ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/review?lastVisible=${pageParam}`
-    : `${process.env.NEXT_PUBLIC_BASE_URL}/api/review`;
+    ? `${baseUrl}/api/review?lastVisible=${pageParam}`
+    : `${baseUrl}/api/review`;
 
   const response = await fetch(url);
   if (!response.ok) {

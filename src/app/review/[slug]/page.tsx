@@ -10,9 +10,8 @@ import { Review } from "@models/review";
 import { User } from "@models/user";
 
 async function fetchReview(slug: string): Promise<(Review & User) | null> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/review/${slug}`,
-  );
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
+  const res = await fetch(`${baseUrl}/api/review/${slug}`);
 
   if (!res.ok) {
     return null;
