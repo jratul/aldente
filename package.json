@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build --webpack",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint ./src",
     "typecheck": "tsc --noEmit"
@@ -48,5 +48,5 @@
     "tailwindcss": "^4.2.2",
     "typescript": "^5"
   },
-  "packageManager": "yarn@4.5.1"
+  "packageManager": "pnpm@10.6.5"
 }
