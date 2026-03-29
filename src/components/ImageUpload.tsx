@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef } from "react";
 import Image from "next/image";
+import { resizeImage } from "@utils/resizeImage";
 
 const MAX_IMAGE_COUNT = 10;
 
@@ -27,14 +28,14 @@ export default function ImageUpload({
     };
   }, [previewUrls]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const selectedFiles = Array.from(e.target.files);
-
-      setFiles([
-        ...files,
-        ...selectedFiles.slice(0, MAX_IMAGE_COUNT - files.length),
-      ]);
+      const selectedFiles = Array.from(e.target.files).slice(
+        0,
+        MAX_IMAGE_COUNT - files.length,
+      );
+      const resized = await Promise.all(selectedFiles.map(resizeImage));
+      setFiles([...files, ...resized]);
     }
   };
 
@@ -50,7 +51,7 @@ export default function ImageUpload({
   };
 
   return (
-    <div className="p-4 border border-1 rounded m-2">
+    <div className="p-4 border rounded m-2">
       <div className="flex justify-between mb-2">
         <span>10장까지 사진을 올릴 수 있어요</span>
         <button onClick={handleClearFiles}>전체 삭제</button>
