@@ -25,7 +25,7 @@ export default function UserCard({ photoURL, displayName, date }: Props) {
         <div>{displayName}</div>
       </div>
       <div className="flex items-center">
-        <div className="flex flex-col items-end text-xs md:text-sm text-gray-500">
+        <div className="flex flex-col items-end text-xs md:text-sm text-gray-600">
           <div>최근 방문일</div>
           <div>{format(date, "yyyy.MM.dd")}</div>
         </div>

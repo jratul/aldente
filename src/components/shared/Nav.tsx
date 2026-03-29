@@ -14,10 +14,11 @@ export default function Nav() {
           session && (
             <div className="flex items-center gap-2 text-sm md:text-base">
               <Image
-                width={400}
-                height={400}
+                width={40}
+                height={40}
                 alt="userImage"
                 src={session?.user?.image ?? ""}
+                sizes="40px"
                 className="w-10 aspect-square rounded-full"
                 priority
               />
@@ -55,13 +56,13 @@ export default function Nav() {
     }
   };
   return (
-    <div className="sticky top-0 z-10 flex h-[50px] items-center justify-start gap-4 bg-white min-w-2xl p-4">
+    <nav className="sticky top-0 z-10 flex h-12.5 items-center justify-start gap-4 bg-white min-w-2xl p-4">
       <div className="grow">
         <Link href="/" className="text-xl font-bold text-blue-500 font-aldrich">
           Aldente
         </Link>
       </div>
       {userInfo()}
-    </div>
+    </nav>
   );
 }

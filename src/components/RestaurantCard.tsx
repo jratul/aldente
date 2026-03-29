@@ -8,7 +8,7 @@ export default function RestaurantCard({ review }: { review: Review }) {
         <div className="text-lg md:text-2xl font-bold w-1/2 break-keep">
           {review.restaurant.name}
         </div>
-        <div className="text-blue-500 text-sm md:text-base">
+        <div className="text-blue-600 text-sm md:text-base">
           {review.restaurant.category}
         </div>
       </div>
@@ -18,10 +18,11 @@ export default function RestaurantCard({ review }: { review: Review }) {
           alt="별점"
           width={15}
           height={15}
+          sizes="15px"
         />
         <div className="text-sm md:text-base">{review.rating}</div>
       </div>
-      <div className="text-gray-500 text-sm md:text-base">
+      <div className="text-gray-600 text-sm md:text-base">
         {review.restaurant.roadAddress}
       </div>
     </div>

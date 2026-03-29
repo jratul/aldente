@@ -8,6 +8,15 @@ import Container from "@components/shared/Container";
 export const metadata: Metadata = {
   title: "Aldente",
   description: "미식의 경험을 나눠 보세요",
+  openGraph: {
+    title: "Aldente",
+    description: "미식의 경험을 나눠 보세요",
+    type: "website",
+    url: process.env.NEXT_PUBLIC_BASE_URL,
+  },
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000",
+  ),
 };
 
 const pretendard = localFont({
