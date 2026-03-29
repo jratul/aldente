@@ -17,7 +17,7 @@ import {
 } from "firebase/firestore";
 import { COLLECTIONS } from "@constants/collections";
 import { authOptions } from "@utils/authOptions";
-import { store } from "@utils/firebase";
+import { getFirebaseStore } from "@utils/firebase";
 import { User } from "@models/user";
 import { Review } from "@models/review";
 
@@ -30,13 +30,13 @@ export async function GET(req: Request) {
 
     if (!lastVisibleId) {
       reviewsQuery = query(
-        collection(store, COLLECTIONS.REVIEWS),
+        collection(getFirebaseStore(), COLLECTIONS.REVIEWS),
         orderBy("date", "desc"),
         limit(5),
       );
     } else {
       const lastVisibleDoc = await getDoc(
-        doc(store, COLLECTIONS.REVIEWS, lastVisibleId),
+        doc(getFirebaseStore(), COLLECTIONS.REVIEWS, lastVisibleId),
       );
 
       if (!lastVisibleDoc.exists()) {
@@ -47,7 +47,7 @@ export async function GET(req: Request) {
       }
 
       reviewsQuery = query(
-        collection(store, COLLECTIONS.REVIEWS),
+        collection(getFirebaseStore(), COLLECTIONS.REVIEWS),
         orderBy("date", "desc"),
         startAfter(lastVisibleDoc),
         limit(5),
@@ -67,7 +67,9 @@ export async function GET(req: Request) {
 
     const uniqueUids = [...new Set(reviews.map(r => r.uid as string))];
     const userDocs = await Promise.all(
-      uniqueUids.map(uid => getDoc(doc(store, COLLECTIONS.USERS, uid))),
+      uniqueUids.map(uid =>
+        getDoc(doc(getFirebaseStore(), COLLECTIONS.USERS, uid)),
+      ),
     );
     const userMap = Object.fromEntries(
       userDocs.map(d => [d.id, d.data() as User]),
@@ -109,7 +111,7 @@ export async function POST(req: Request) {
   let userUid;
   try {
     const userQuery = query(
-      collection(store, COLLECTIONS.USERS),
+      collection(getFirebaseStore(), COLLECTIONS.USERS),
       where("email", "==", userEmail),
     );
 
@@ -155,7 +157,10 @@ export async function POST(req: Request) {
       restaurant: body.restaurant,
     };
 
-    await setDoc(doc(collection(store, COLLECTIONS.REVIEWS)), review);
+    await setDoc(
+      doc(collection(getFirebaseStore(), COLLECTIONS.REVIEWS)),
+      review,
+    );
 
     return NextResponse.json({ status: 200 });
   } catch (error) {

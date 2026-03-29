@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { COLLECTIONS } from "@constants/collections";
-import { store } from "@utils/firebase";
+import { getFirebaseStore } from "@utils/firebase";
 import { Review } from "@models/review";
 import { User } from "@models/user";
 
@@ -17,7 +17,9 @@ export async function GET(
   }
 
   try {
-    const reviewDoc = await getDoc(doc(store, COLLECTIONS.REVIEWS, slug));
+    const reviewDoc = await getDoc(
+      doc(getFirebaseStore(), COLLECTIONS.REVIEWS, slug),
+    );
 
     const review: Partial<Review> = {
       id: reviewDoc.id,
@@ -29,7 +31,7 @@ export async function GET(
     };
 
     const userDoc = await getDoc(
-      doc(store, COLLECTIONS.USERS, review.uid as ""),
+      doc(getFirebaseStore(), COLLECTIONS.USERS, review.uid as ""),
     );
 
     const userData = userDoc.data() as User;

@@ -4,7 +4,7 @@ import {
   GoogleAuthProvider,
   signInWithCredential,
 } from "firebase/auth/web-extension";
-import { auth, store } from "./firebase";
+import { getFirebaseAuth, getFirebaseStore } from "./firebase";
 import { doc, setDoc } from "firebase/firestore";
 
 export const authOptions: AuthOptions = {
@@ -30,7 +30,7 @@ export const authOptions: AuthOptions = {
         );
 
         const userCredential = await signInWithCredential(
-          auth,
+          getFirebaseAuth(),
           googleCredential,
         ).catch(e => {
           console.log(e);
@@ -40,7 +40,7 @@ export const authOptions: AuthOptions = {
         if (typeof userCredential !== "boolean") {
           const user = userCredential.user;
 
-          const userRef = doc(store, "users", user.uid);
+          const userRef = doc(getFirebaseStore(), "users", user.uid);
 
           await setDoc(
             userRef,

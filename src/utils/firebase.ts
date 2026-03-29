@@ -37,20 +37,3 @@ export function getFirebaseStore(): Firestore {
   }
   return _store;
 }
-
-// Backward-compatible lazy getters
-export const auth = new Proxy({} as Auth, {
-  get(_, prop) {
-    return (getFirebaseAuth() as unknown as Record<string | symbol, unknown>)[
-      prop
-    ];
-  },
-});
-
-export const store = new Proxy({} as Firestore, {
-  get(_, prop) {
-    return (getFirebaseStore() as unknown as Record<string | symbol, unknown>)[
-      prop
-    ];
-  },
-});
