@@ -19,6 +19,7 @@ export default function UserCard({ photoURL, displayName, date }: Props) {
           alt="userImage"
           width={48}
           height={48}
+          sizes="48px"
           className="h-8 w-8 md:h-12 md:w-12 rounded-full"
         />
         <div>{displayName}</div>

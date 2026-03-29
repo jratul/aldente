@@ -41,6 +41,7 @@ export default function ReviewItem({ review, priority = false }: Props) {
             className="aspect-[4/3] w-full object-cover"
             width={800}
             height={600}
+            sizes="(max-width: 768px) 100vw, 768px"
             priority={priority}
           />
           <div
