@@ -1,7 +1,9 @@
 import { useCallback } from "react";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
-async function fetchReviewList({ pageParam }: { pageParam?: string }) {
+export const reviewQueryKey = ["review"];
+
+export async function fetchReviewList({ pageParam }: { pageParam?: string }) {
   const baseUrl =
     typeof window === "undefined"
       ? (process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000")
@@ -21,7 +23,7 @@ async function fetchReviewList({ pageParam }: { pageParam?: string }) {
 function useReviewList() {
   const { data, error, hasNextPage, fetchNextPage, isFetching } =
     useSuspenseInfiniteQuery({
-      queryKey: ["review"],
+      queryKey: reviewQueryKey,
       queryFn: fetchReviewList,
       getNextPageParam: lastPage =>
         lastPage.hasMore ? lastPage.lastVisible : null,
