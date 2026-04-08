@@ -56,7 +56,7 @@ export default function Nav() {
     }
   };
   return (
-    <nav className="sticky top-0 z-10 flex h-12.5 items-center justify-start gap-4 bg-white min-w-2xl p-4">
+    <nav className="sticky top-0 z-10 flex h-12.5 w-full items-center justify-start gap-4 bg-white p-4">
       <div className="grow">
         <Link href="/" className="text-xl font-bold text-blue-500 font-aldrich">
           Aldente
