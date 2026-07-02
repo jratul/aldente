@@ -1,9 +1,6 @@
 import { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import {
-  GoogleAuthProvider,
-  signInWithCredential,
-} from "firebase/auth/web-extension";
+import { GoogleAuthProvider, signInWithCredential } from "firebase/auth";
 import { getFirebaseAuth, getFirebaseStore } from "./firebase";
 import { doc, setDoc } from "firebase/firestore";
 

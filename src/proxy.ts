@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 
-const protectedRoutes = ["/write", "/api/write"];
+const protectedRoutes = ["/write"];
 
 export async function proxy(req: NextRequest) {
   if (protectedRoutes.some(path => req.nextUrl.pathname.startsWith(path))) {
@@ -24,5 +24,5 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/write", "/api/write"],
+  matcher: ["/write"],
 };

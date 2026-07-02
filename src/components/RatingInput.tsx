@@ -6,7 +6,6 @@ interface Props {
 }
 
 export default function RatingInput({ rating, setRating }: Props) {
-  // const handleRatingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const handleRatingChange = (newRating: number) => {
     setRating(newRating);
   };

@@ -31,7 +31,7 @@ export async function GET(
     };
 
     const userDoc = await getDoc(
-      doc(getFirebaseStore(), COLLECTIONS.USERS, review.uid as ""),
+      doc(getFirebaseStore(), COLLECTIONS.USERS, review.uid as string),
     );
 
     const userData = userDoc.data() as User;

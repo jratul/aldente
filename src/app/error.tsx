@@ -3,9 +3,14 @@
 import Button from "@components/shared/Button";
 import { useRouter } from "next/navigation";
 
-export default function ErrorPage() {
+interface Props {
+  reset: () => void;
+}
+
+export default function ErrorPage({ reset }: Props) {
   const router = useRouter();
   const handleButtonClick = () => {
+    reset();
     router.back();
   };
 

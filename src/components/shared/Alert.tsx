@@ -1,4 +1,4 @@
-"useClient";
+"use client";
 
 import useAlertStore from "@hooks/useAlertStore";
 import Button from "./Button";

@@ -12,16 +12,18 @@ export default function Button({
   disabled = false,
 }: Props) {
   return (
-    <div
+    <button
+      type="button"
       className={clsx(
         "p-2 rounded text-center w-full",
         disabled
-          ? "p-2 rounded bg-gray-300 text-gray-500 text-center w-full"
+          ? "bg-gray-300 text-gray-500"
           : "bg-blue-500 text-white hover:bg-blue-400 cursor-pointer",
       )}
       onClick={handleClick}
+      disabled={disabled}
     >
       {children}
-    </div>
+    </button>
   );
 }
