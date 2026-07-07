@@ -146,5 +146,3 @@ Aldente 프로젝트의 파일별 기술 스택 정리 문서. `CLAUDE.md`가 �
 ## 참고
 
 - 스타일 관련 전역 규칙, 폴더 구조 원칙, 알려진 이슈는 [CLAUDE.md](./CLAUDE.md) 참고.
-  단, 현재 `CLAUDE.md`의 기술 스택 표(Next 15 / Yarn Berry / `middleware.ts`)는 이후 진행된
-  Next 16 · pnpm 마이그레이션이 반영되지 않아 이 문서(TECH.md)와 어긋나 있다 — 갱신 필요.

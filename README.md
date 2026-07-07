@@ -3,6 +3,9 @@
 식당 리뷰 공유 프로젝트입니다.
 https://aldente2.vercel.app
 
+프로젝트 아키텍처/컨벤션은 [CLAUDE.md](./CLAUDE.md), 파일별 기술 스택 상세는
+[TECH.md](./TECH.md) 참고.
+
 ## Powered by
 
 <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" />
