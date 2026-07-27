@@ -34,11 +34,11 @@ export default function ReviewItem({ review, priority = false }: Props) {
           displayName={review.displayName}
           date={review.date}
         />
-        <div className="relative aspect-[4/3] w-full">
+        <div className="relative aspect-4/3 w-full">
           <Image
             src={review.images[0]}
             alt={review.restaurant.name}
-            className="aspect-[4/3] w-full object-cover"
+            className="aspect-4/3 w-full object-cover"
             width={800}
             height={600}
             sizes="(max-width: 768px) 100vw, 768px"
@@ -46,7 +46,7 @@ export default function ReviewItem({ review, priority = false }: Props) {
           />
           <div
             aria-hidden="true"
-            className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-gray-800 opacity-80"
+            className="absolute inset-x-0 bottom-0 h-2/3 bg-linear-to-t from-gray-800 opacity-80"
           />
           <div className="absolute bottom-2 p-5">
             <div className="mb-1 text-base font-bold text-white md:text-2xl whitespace-pre-wrap">

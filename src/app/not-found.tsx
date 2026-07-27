@@ -10,7 +10,7 @@ export default function NotFoundPage() {
     router.back();
   };
   return (
-    <div className="flex flex-col items-center mt-[100px] gap-2">
+    <div className="flex flex-col items-center mt-25 gap-2">
       <div className="font-bold">없는 메뉴를 주문했어요</div>
       <Image src="/blank.webp" alt="blank" width={400} height={400} />
       <Button handleClick={handleButtonClick}>돌아가기</Button>

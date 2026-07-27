@@ -1,6 +1,6 @@
 export default function Loading() {
   return (
-    <div className="w-full h-[500px] flex justify-center items-center flex-col gap-4">
+    <div className="w-full h-125 flex justify-center items-center flex-col gap-4">
       <div>
         <span className="loader border-red-500 border-4" />
       </div>

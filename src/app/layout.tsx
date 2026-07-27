@@ -40,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${pretendard.variable} ${aldrich.variable}`}>
       <body className={"font-pretendard tracking-tight"}>
-        <div className="min-w-[380px] max-w-3xl mx-auto">
+        <div className="min-w-95 max-w-3xl mx-auto">
           <ClientProvider>
             <Nav />
             <Container>{children}</Container>
