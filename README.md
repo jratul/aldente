@@ -4,7 +4,7 @@
 https://aldente2.vercel.app
 
 프로젝트 아키텍처/컨벤션은 [CLAUDE.md](./CLAUDE.md), 파일별 기술 스택 상세는
-[TECH.md](./TECH.md) 참고.
+[TECH.md](./TECH.md), 설정 파일/패키지별 도입 이유는 [PROJECT.md](./PROJECT.md) 참고.
 
 ## Powered by
 
@@ -27,6 +27,8 @@ https://aldente2.vercel.app
 
 - Infinite Scroll로 리뷰 무한 스크롤 (TanStack Query)
 - 카카오 지도 API 연동으로 식당 위치 검색 및 지정
+- 지도 탭에서 업로드된 전체 식당을 마커/클러스터링으로 한눈에 확인
+- 리뷰 작성 시 음식 카테고리(한식/양식/카페 등) 태깅
 - Motion으로 리뷰 아이템 진입 애니메이션
 - AWS S3 리뷰 이미지 업로드
 - Google OAuth 로그인
