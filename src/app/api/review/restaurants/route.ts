@@ -28,6 +28,8 @@ export async function GET() {
         reviewId: docItem.id,
         restaurant: data.restaurant,
         foodCategory: data.foodCategory,
+        rating: data.rating,
+        image: data.images?.[0],
       });
     });
 

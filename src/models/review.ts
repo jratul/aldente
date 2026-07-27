@@ -27,4 +27,6 @@ export interface RestaurantMapItem {
   reviewId: string;
   restaurant: Review["restaurant"];
   foodCategory: Review["foodCategory"];
+  rating: Review["rating"];
+  image: string;
 }
