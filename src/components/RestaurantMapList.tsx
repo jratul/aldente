@@ -24,15 +24,17 @@ export default function RestaurantMapList({
 }: Props) {
   return (
     <div className="flex h-full flex-col">
-      <div className="px-2 pt-2">
+      <div className="p-4 pb-2">
         <TextField
           placeholder="식당 이름으로 검색"
           value={search}
           handleChange={setSearch}
         />
       </div>
-      <CategoryFilter value={category} onChange={setCategory} />
-      <div className="flex-1 overflow-y-auto border-t">
+      <div className="px-3">
+        <CategoryFilter value={category} onChange={setCategory} />
+      </div>
+      <div className="flex-1 overflow-y-auto p-2">
         {restaurants.length === 0 ? (
           <EmptySign label="일치하는 식당이 없어요" />
         ) : (
@@ -42,14 +44,14 @@ export default function RestaurantMapList({
                 key={reviewId}
                 type="button"
                 onClick={() => onSelect(reviewId)}
-                className="flex w-full items-center gap-2 border-b p-2 text-left hover:bg-gray-50"
+                className="flex w-full items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-gray-50"
               >
-                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded">
+                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-gray-100">
                   <Image
                     src={image}
                     alt={restaurant.name}
                     fill
-                    sizes="56px"
+                    sizes="80px"
                     className="object-cover"
                   />
                 </div>
@@ -57,9 +59,9 @@ export default function RestaurantMapList({
                   <div className="truncate text-sm font-bold">
                     {restaurant.name}
                   </div>
-                  <div className="flex items-center gap-1 text-xs text-gray-500">
+                  <div className="mt-1 flex items-center gap-1.5 text-xs text-gray-500">
                     {foodCategory && (
-                      <span className="rounded-full bg-blue-50 px-1.5 py-0.5 text-blue-600">
+                      <span className="rounded-full bg-blue-50 px-2 py-0.5 font-medium text-blue-600">
                         {foodCategory}
                       </span>
                     )}

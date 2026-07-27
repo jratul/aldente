@@ -11,6 +11,10 @@ import EmptySign from "./EmptySign";
 
 const DEFAULT_CENTER = { lat: 37.5665, lng: 126.978 };
 const MAP_STATE_KEY = "aldente:mapState";
+// 지도에서 리뷰로 이동할 때만 세운다 — 이 플래그가 있을 때만 저장된 지도 상태를 복원하고,
+// 소비 즉시 지운다. 그래야 nav의 "지도" 링크로 새로 들어오거나 새로고침했을 때는 항상
+// 전체 핀이 보이도록 fit-bounds가 되고, 리뷰에서 뒤로 돌아왔을 때만 이전 상태가 복원된다.
+const RETURN_FLAG_KEY = "aldente:mapPendingReturn";
 
 interface MapState {
   lat: number;
@@ -34,6 +38,25 @@ function writeMapState(state: MapState) {
     sessionStorage.setItem(MAP_STATE_KEY, JSON.stringify(state));
   } catch {
     // sessionStorage 접근 불가 환경(시크릿 모드 등)은 그냥 무시한다
+  }
+}
+
+function armReturnFlag() {
+  try {
+    sessionStorage.setItem(RETURN_FLAG_KEY, "1");
+  } catch {
+    // 무시
+  }
+}
+
+function consumeReturnFlag(): boolean {
+  try {
+    const pending = sessionStorage.getItem(RETURN_FLAG_KEY);
+    if (!pending) return false;
+    sessionStorage.removeItem(RETURN_FLAG_KEY);
+    return true;
+  } catch {
+    return false;
   }
 }
 
@@ -76,7 +99,7 @@ export default function AllRestaurantsMap() {
     (map: kakao.maps.Map) => {
       mapRef.current = map;
 
-      const saved = readMapState();
+      const saved = consumeReturnFlag() ? readMapState() : null;
       if (saved) {
         map.setCenter(new kakao.maps.LatLng(saved.lat, saved.lng));
         map.setLevel(saved.level);
@@ -119,6 +142,10 @@ export default function AllRestaurantsMap() {
   };
 
   const handleSelect = (reviewId: string) => {
+    if (mapRef.current) {
+      persistState(mapRef.current);
+    }
+    armReturnFlag();
     setMobileListOpen(false);
     router.push(`/review/${reviewId}`);
   };
@@ -136,8 +163,8 @@ export default function AllRestaurantsMap() {
   }
 
   return (
-    <div className="relative flex h-[70vh] gap-2">
-      <div className="hidden w-64 shrink-0 overflow-hidden rounded border md:flex">
+    <div className="relative left-1/2 flex h-[70vh] w-screen -translate-x-1/2 gap-4 px-4 md:px-6">
+      <div className="hidden w-96 shrink-0 overflow-hidden rounded-2xl bg-white shadow-md md:flex">
         <RestaurantMapList
           restaurants={filteredRestaurants}
           search={search}
@@ -152,7 +179,7 @@ export default function AllRestaurantsMap() {
         type="button"
         aria-label="식당 목록 열기"
         onClick={() => setMobileListOpen(true)}
-        className="absolute top-2 left-2 z-10 flex h-9 w-9 items-center justify-center rounded bg-white shadow md:hidden"
+        className="absolute top-4 left-6 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md md:hidden"
       >
         <svg
           viewBox="0 0 24 24"
@@ -172,12 +199,12 @@ export default function AllRestaurantsMap() {
             className="absolute inset-0 bg-black/30"
             onClick={() => setMobileListOpen(false)}
           />
-          <div className="relative flex h-full w-72 flex-col bg-white shadow-lg">
+          <div className="relative flex h-full w-80 flex-col bg-white shadow-xl">
             <button
               type="button"
               aria-label="식당 목록 닫기"
               onClick={() => setMobileListOpen(false)}
-              className="absolute top-2 right-2 z-10 flex h-8 w-8 items-center justify-center rounded hover:bg-gray-100"
+              className="absolute top-2 right-2 z-10 flex h-8 w-8 items-center justify-center rounded-full hover:bg-gray-100"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -202,7 +229,7 @@ export default function AllRestaurantsMap() {
         </div>
       )}
 
-      <div className="min-w-0 flex-1">
+      <div className="min-w-0 flex-1 overflow-hidden rounded-2xl shadow-md">
         <Map
           center={DEFAULT_CENTER}
           level={7}

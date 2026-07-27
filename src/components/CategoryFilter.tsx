@@ -8,15 +8,15 @@ interface Props {
 
 export default function CategoryFilter({ value, onChange }: Props) {
   return (
-    <div className="flex flex-wrap gap-1.5 p-2">
+    <div className="flex flex-wrap gap-1.5 py-2">
       <button
         type="button"
         onClick={() => onChange(undefined)}
         className={clsx(
-          "px-2.5 py-1 rounded-full border text-xs",
+          "rounded-full px-3 py-1 text-xs font-medium transition-colors",
           !value
-            ? "bg-blue-500 text-white border-blue-500"
-            : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100",
+            ? "bg-blue-500 text-white"
+            : "bg-gray-100 text-gray-600 hover:bg-gray-200",
         )}
       >
         전체
@@ -27,10 +27,10 @@ export default function CategoryFilter({ value, onChange }: Props) {
           type="button"
           onClick={() => onChange(value === category ? undefined : category)}
           className={clsx(
-            "px-2.5 py-1 rounded-full border text-xs",
+            "rounded-full px-3 py-1 text-xs font-medium transition-colors",
             value === category
-              ? "bg-blue-500 text-white border-blue-500"
-              : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100",
+              ? "bg-blue-500 text-white"
+              : "bg-gray-100 text-gray-600 hover:bg-gray-200",
           )}
         >
           {category}
