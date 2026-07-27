@@ -57,9 +57,12 @@ export default function Nav() {
   };
   return (
     <nav className="sticky top-0 z-10 flex h-12.5 w-full items-center justify-start gap-4 bg-white p-4">
-      <div className="grow">
+      <div className="grow flex items-center gap-4">
         <Link href="/" className="text-xl font-bold text-blue-500 font-aldrich">
           Aldente
+        </Link>
+        <Link href="/map" className="text-sm hover:underline md:text-base">
+          지도
         </Link>
       </div>
       {userInfo()}

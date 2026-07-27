@@ -5,8 +5,15 @@ export default function RestaurantCard({ review }: { review: Review }) {
   return (
     <div className="flex flex-col p-3">
       <div className="flex justify-between items-center gap-2">
-        <div className="text-lg md:text-2xl font-bold w-1/2 break-keep">
-          {review.restaurant.name}
+        <div className="flex items-center gap-2 w-1/2">
+          {review.foodCategory && (
+            <span className="shrink-0 rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-600 md:text-sm">
+              {review.foodCategory}
+            </span>
+          )}
+          <div className="text-lg md:text-2xl font-bold break-keep">
+            {review.restaurant.name}
+          </div>
         </div>
         <div className="text-blue-600 text-sm md:text-base">
           {review.restaurant.category}

@@ -152,6 +152,7 @@ export async function POST(req: Request) {
       date: new Date(),
       rating: body.rating,
       images: body.images,
+      foodCategory: body.foodCategory,
       title: body.title,
       content: body.content,
       restaurant: body.restaurant,

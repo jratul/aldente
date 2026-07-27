@@ -6,9 +6,11 @@ import clsx from "clsx";
 import ImageUpload from "@components/ImageUpload";
 import WriteMap from "@components/WriteMap";
 import RatingInput from "@components/RatingInput";
+import CategorySelect from "@components/CategorySelect";
 import PlaceCard from "@components/PlaceCard";
 import Button from "@components/shared/Button";
 import { Place } from "@models/place";
+import { FoodCategory } from "@constants/foodCategories";
 import useAlertStore from "@hooks/useAlertStore";
 import useWriteReview from "@queries/useWriteReview";
 import TextField from "@components/shared/TextField";
@@ -20,6 +22,7 @@ export default function WritePage() {
   const [step, setStep] = useState<number>(0);
   const [selectedPlace, setSelectedPlace] = useState<Place>();
   const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [foodCategory, setFoodCategory] = useState<FoodCategory>();
   const [title, setTitle] = useState<string>("");
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const { openAlert } = useAlertStore();
@@ -31,6 +34,7 @@ export default function WritePage() {
       !(
         selectedPlace &&
         imageFiles.length > 0 &&
+        foodCategory &&
         title &&
         contentRef?.current?.value
       )
@@ -50,6 +54,7 @@ export default function WritePage() {
     writeReview({
       rating,
       imageFiles,
+      foodCategory,
       title,
       content: JSON.stringify(
         contentRef?.current?.value?.replaceAll("<br>", "\r\n") ?? "",
@@ -115,6 +120,7 @@ export default function WritePage() {
         )}
       >
         <RatingInput rating={rating} setRating={setRating} />
+        <CategorySelect value={foodCategory} onChange={setFoodCategory} />
         <ImageUpload files={imageFiles} setFilesAction={setImageFiles} />
         <TextField
           placeholder="당신의 경험을 한 줄로 표현해 주세요."
