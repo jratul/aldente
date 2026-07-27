@@ -12,7 +12,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
@@ -22,37 +22,36 @@
         "name": "next"
       }
     ],
-    "baseUrl": "src",
     "paths": {
       "@app/*": [
-        "app/*"
+        "./src/app/*"
       ],
       "@api/*": [
-        "app/api/*"
+        "./src/app/api/*"
       ],
       "@fonts/*": [
-        "app/fonts/*"
+        "./src/app/fonts/*"
       ],
       "@context/*": [
-        "context/*"
+        "./src/context/*"
       ],
       "@constants/*": [
-        "constants/*"
+        "./src/constants/*"
       ],
       "@components/*": [
-        "components/*"
+        "./src/components/*"
       ],
       "@models/*": [
-        "models/*"
+        "./src/models/*"
       ],
       "@utils/*": [
-        "utils/*"
+        "./src/utils/*"
       ],
       "@hooks/*": [
-        "hooks/*"
+        "./src/hooks/*"
       ],
       "@queries/*": [
-        "queries/*"
+        "./src/queries/*"
       ]
     }
   },
