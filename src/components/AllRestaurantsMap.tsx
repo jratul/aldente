@@ -6,6 +6,7 @@ import { Map, MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
 import useKakaoLoader from "@hooks/useKakaoLoader";
 import useRestaurantMap from "@queries/useRestaurantMap";
 import { FoodCategory } from "@constants/foodCategories";
+import { RestaurantMapItem } from "@models/review";
 import RestaurantMapList from "./RestaurantMapList";
 import EmptySign from "./EmptySign";
 
@@ -60,6 +61,22 @@ function consumeReturnFlag(): boolean {
   }
 }
 
+// 사이드바가 붙은 flex 레이아웃 안에서 지도가 생성되는 시점에는 컨테이너가 아직
+// 최종 크기로 자리잡기 전일 수 있다. relayout() 없이 setBounds를 부르면 Kakao가
+// 그 순간의(잘못된) 컨테이너 크기 기준으로 줌 레벨을 계산해버려 "전체 핀 보기"가
+// 어긋난다 — 그래서 항상 relayout()을 먼저 호출한다.
+function fitBoundsToList(map: kakao.maps.Map, list: RestaurantMapItem[]) {
+  if (list.length === 0) return;
+  map.relayout();
+  const bounds = new kakao.maps.LatLngBounds();
+  list.forEach(({ restaurant }) => {
+    bounds.extend(
+      new kakao.maps.LatLng(restaurant.pos.lat, restaurant.pos.lng),
+    );
+  });
+  map.setBounds(bounds);
+}
+
 export default function AllRestaurantsMap() {
   useKakaoLoader();
   const router = useRouter();
@@ -101,6 +118,7 @@ export default function AllRestaurantsMap() {
 
       const saved = consumeReturnFlag() ? readMapState() : null;
       if (saved) {
+        map.relayout();
         map.setCenter(new kakao.maps.LatLng(saved.lat, saved.lng));
         map.setLevel(saved.level);
         setCategory(saved.category);
@@ -108,17 +126,9 @@ export default function AllRestaurantsMap() {
         return;
       }
 
-      if (restaurants.length === 0) {
-        return;
-      }
-
-      const bounds = new kakao.maps.LatLngBounds();
-      restaurants.forEach(({ restaurant }) => {
-        bounds.extend(
-          new kakao.maps.LatLng(restaurant.pos.lat, restaurant.pos.lng),
-        );
-      });
-      map.setBounds(bounds);
+      // 사이드바 flex 레이아웃이 자리잡는 다음 프레임까지 한 틱 미뤄서
+      // relayout()이 최종 컨테이너 크기를 보고 계산하게 한다.
+      requestAnimationFrame(() => fitBoundsToList(map, restaurants));
     },
     [restaurants],
   );
@@ -150,6 +160,20 @@ export default function AllRestaurantsMap() {
     router.push(`/review/${reviewId}`);
   };
 
+  const handleLocate = (pos: { lat: number; lng: number }) => {
+    if (!mapRef.current) return;
+    mapRef.current.relayout();
+    mapRef.current.setCenter(new kakao.maps.LatLng(pos.lat, pos.lng));
+    mapRef.current.setLevel(3);
+    setMobileListOpen(false);
+  };
+
+  const handleFitAll = () => {
+    if (mapRef.current) {
+      fitBoundsToList(mapRef.current, filteredRestaurants);
+    }
+  };
+
   const handleMarkerClick = (placeUrl: string) => {
     window.open(placeUrl, "_blank", "noopener,noreferrer");
   };
@@ -172,6 +196,7 @@ export default function AllRestaurantsMap() {
           category={category}
           setCategory={handleCategoryChange}
           onSelect={handleSelect}
+          onLocate={handleLocate}
         />
       </div>
 
@@ -224,12 +249,36 @@ export default function AllRestaurantsMap() {
               category={category}
               setCategory={handleCategoryChange}
               onSelect={handleSelect}
+              onLocate={handleLocate}
             />
           </div>
         </div>
       )}
 
-      <div className="min-w-0 flex-1 overflow-hidden rounded-2xl shadow-md">
+      <div className="relative min-w-0 flex-1 overflow-hidden rounded-2xl shadow-md">
+        <button
+          type="button"
+          aria-label="전체 식당이 보이도록 지도 맞추기"
+          title="전체 보기"
+          onClick={handleFitAll}
+          className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md hover:bg-gray-50"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            width={18}
+            height={18}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 3.75H5.25a1.5 1.5 0 0 0-1.5 1.5V9m15-5.25h-3.75m3.75 0V9m0 6v3.75a1.5 1.5 0 0 1-1.5 1.5H15m-6 0H5.25a1.5 1.5 0 0 1-1.5-1.5V15"
+            />
+          </svg>
+        </button>
+
         <Map
           center={DEFAULT_CENTER}
           level={7}
