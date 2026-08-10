@@ -4,7 +4,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   CustomOverlayMap,
-  Map,
+  Map as KakaoMap,
   MapMarker,
   MarkerClusterer,
 } from "react-kakao-maps-sdk";
@@ -17,9 +17,6 @@ import EmptySign from "./EmptySign";
 
 const DEFAULT_CENTER = { lat: 37.5665, lng: 126.978 };
 const DEFAULT_LEVEL = 7;
-// MarkerClusterer의 minLevel과 맞춘 값. 이 레벨 미만(더 확대된 상태)에서는 마커가
-// 클러스터로 뭉치지 않으므로 그때만 이름/평점 라벨을 보여준다 — 클러스터로 뭉친
-// 상태에서 라벨까지 같이 켜두면 겹쳐서 지저분해진다.
 const CLUSTER_MIN_LEVEL = 6;
 const MAP_STATE_KEY = "aldente:mapState";
 // 지도에서 리뷰로 이동할 때만 세운다 — 이 플래그가 있을 때만 저장된 지도 상태를 복원하고,
@@ -93,10 +90,18 @@ export default function AllRestaurantsMap() {
   const { restaurants } = useRestaurantMap();
 
   const mapRef = useRef<kakao.maps.Map | null>(null);
+  // 네이티브 마커 인스턴스 -> reviewId. onClustered에서 돌려주는 Cluster가 들고 있는
+  // 마커 배열은 kakao.maps.Marker 원본 객체라, reviewId로 되짚어보려면 이 매핑이 필요하다.
+  const markerReviewIdsRef = useRef(new Map<kakao.maps.Marker, string>());
   const [category, setCategory] = useState<FoodCategory>();
   const [search, setSearch] = useState("");
   const [mobileListOpen, setMobileListOpen] = useState(false);
-  const [zoomLevel, setZoomLevel] = useState(DEFAULT_LEVEL);
+  // 실제로 클러스터에 묶인 reviewId 집합. 줌 레벨로 어림짐작하지 않고
+  // MarkerClusterer의 onClustered가 알려주는 값을 그대로 신뢰한다 — 그래야 넓은
+  // 화면이어도 혼자 떨어진 핀은 항상 라벨이 보이고, 뭉친 핀만 라벨이 숨는다.
+  const [clusteredReviewIds, setClusteredReviewIds] = useState<Set<string>>(
+    new Set(),
+  );
 
   const filteredRestaurants = useMemo(
     () =>
@@ -146,7 +151,22 @@ export default function AllRestaurantsMap() {
 
   const handleIdle = (map: kakao.maps.Map) => {
     persistState(map);
-    setZoomLevel(map.getLevel());
+  };
+
+  const handleClustered = (
+    _target: kakao.maps.MarkerClusterer,
+    clusters: kakao.maps.Cluster[],
+  ) => {
+    const ids = new Set<string>();
+    clusters.forEach(cluster => {
+      cluster.getMarkers().forEach(marker => {
+        const reviewId = markerReviewIdsRef.current.get(
+          marker as kakao.maps.Marker,
+        );
+        if (reviewId) ids.add(reviewId);
+      });
+    });
+    setClusteredReviewIds(ids);
   };
 
   const handleCategoryChange = (next?: FoodCategory) => {
@@ -291,14 +311,18 @@ export default function AllRestaurantsMap() {
           </svg>
         </button>
 
-        <Map
+        <KakaoMap
           center={DEFAULT_CENTER}
           level={DEFAULT_LEVEL}
           className="w-full h-full"
           onCreate={handleCreate}
           onIdle={handleIdle}
         >
-          <MarkerClusterer averageCenter minLevel={CLUSTER_MIN_LEVEL}>
+          <MarkerClusterer
+            averageCenter
+            minLevel={CLUSTER_MIN_LEVEL}
+            onClustered={handleClustered}
+          >
             {filteredRestaurants.map(
               ({ reviewId, restaurant, foodCategory }) => (
                 <MapMarker
@@ -309,13 +333,17 @@ export default function AllRestaurantsMap() {
                       ? `${restaurant.name} · ${foodCategory}`
                       : restaurant.name
                   }
+                  onCreate={marker =>
+                    markerReviewIdsRef.current.set(marker, reviewId)
+                  }
                   onClick={() => handleMarkerClick(restaurant.placeUrl)}
                 />
               ),
             )}
           </MarkerClusterer>
-          {zoomLevel < CLUSTER_MIN_LEVEL &&
-            filteredRestaurants.map(({ reviewId, restaurant, rating }) => (
+          {filteredRestaurants
+            .filter(({ reviewId }) => !clusteredReviewIds.has(reviewId))
+            .map(({ reviewId, restaurant, rating }) => (
               <CustomOverlayMap
                 key={reviewId}
                 position={restaurant.pos}
@@ -331,7 +359,7 @@ export default function AllRestaurantsMap() {
                 </div>
               </CustomOverlayMap>
             ))}
-        </Map>
+        </KakaoMap>
       </div>
     </div>
   );
