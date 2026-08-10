@@ -2,7 +2,12 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Map, MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
+import {
+  CustomOverlayMap,
+  Map,
+  MapMarker,
+  MarkerClusterer,
+} from "react-kakao-maps-sdk";
 import useKakaoLoader from "@hooks/useKakaoLoader";
 import useRestaurantMap from "@queries/useRestaurantMap";
 import { FoodCategory } from "@constants/foodCategories";
@@ -11,6 +16,11 @@ import RestaurantMapList from "./RestaurantMapList";
 import EmptySign from "./EmptySign";
 
 const DEFAULT_CENTER = { lat: 37.5665, lng: 126.978 };
+const DEFAULT_LEVEL = 7;
+// MarkerClusterer의 minLevel과 맞춘 값. 이 레벨 미만(더 확대된 상태)에서는 마커가
+// 클러스터로 뭉치지 않으므로 그때만 이름/평점 라벨을 보여준다 — 클러스터로 뭉친
+// 상태에서 라벨까지 같이 켜두면 겹쳐서 지저분해진다.
+const CLUSTER_MIN_LEVEL = 6;
 const MAP_STATE_KEY = "aldente:mapState";
 // 지도에서 리뷰로 이동할 때만 세운다 — 이 플래그가 있을 때만 저장된 지도 상태를 복원하고,
 // 소비 즉시 지운다. 그래야 nav의 "지도" 링크로 새로 들어오거나 새로고침했을 때는 항상
@@ -86,6 +96,7 @@ export default function AllRestaurantsMap() {
   const [category, setCategory] = useState<FoodCategory>();
   const [search, setSearch] = useState("");
   const [mobileListOpen, setMobileListOpen] = useState(false);
+  const [zoomLevel, setZoomLevel] = useState(DEFAULT_LEVEL);
 
   const filteredRestaurants = useMemo(
     () =>
@@ -135,6 +146,7 @@ export default function AllRestaurantsMap() {
 
   const handleIdle = (map: kakao.maps.Map) => {
     persistState(map);
+    setZoomLevel(map.getLevel());
   };
 
   const handleCategoryChange = (next?: FoodCategory) => {
@@ -281,12 +293,12 @@ export default function AllRestaurantsMap() {
 
         <Map
           center={DEFAULT_CENTER}
-          level={7}
+          level={DEFAULT_LEVEL}
           className="w-full h-full"
           onCreate={handleCreate}
           onIdle={handleIdle}
         >
-          <MarkerClusterer averageCenter minLevel={6}>
+          <MarkerClusterer averageCenter minLevel={CLUSTER_MIN_LEVEL}>
             {filteredRestaurants.map(
               ({ reviewId, restaurant, foodCategory }) => (
                 <MapMarker
@@ -302,6 +314,23 @@ export default function AllRestaurantsMap() {
               ),
             )}
           </MarkerClusterer>
+          {zoomLevel < CLUSTER_MIN_LEVEL &&
+            filteredRestaurants.map(({ reviewId, restaurant, rating }) => (
+              <CustomOverlayMap
+                key={reviewId}
+                position={restaurant.pos}
+                yAnchor={0}
+              >
+                <div className="pointer-events-none mt-1 flex flex-col items-center whitespace-nowrap rounded-md bg-white px-2 py-1 text-center shadow-md ring-1 ring-black/5">
+                  <span className="text-xs font-bold text-gray-900">
+                    {restaurant.name}
+                  </span>
+                  <span className="text-xs font-semibold text-amber-500">
+                    ⭐ {rating}
+                  </span>
+                </div>
+              </CustomOverlayMap>
+            ))}
         </Map>
       </div>
     </div>
