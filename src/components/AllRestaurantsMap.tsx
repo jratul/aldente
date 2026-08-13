@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import clsx from "clsx";
 import {
   CustomOverlayMap,
   Map as KakaoMap,
@@ -17,6 +18,9 @@ import EmptySign from "./EmptySign";
 
 const DEFAULT_CENTER = { lat: 37.5665, lng: 126.978 };
 const DEFAULT_LEVEL = 7;
+// 지도 탭 높이 = 100vh - Nav(50px, h-12.5) - Container 상하 패딩(각 16px, p-4).
+// 뷰포트에 남는 영역을 그대로 다 채우도록 고정값 대신 이 계산식을 쓴다.
+const MAP_HEIGHT = "h-[calc(100vh-82px)]";
 const CLUSTER_MIN_LEVEL = 6;
 const MAP_STATE_KEY = "aldente:mapState";
 // 지도에서 리뷰로 이동할 때만 세운다 — 이 플래그가 있을 때만 저장된 지도 상태를 복원하고,
@@ -212,14 +216,19 @@ export default function AllRestaurantsMap() {
 
   if (restaurants.length === 0) {
     return (
-      <div className="w-full h-[70vh]">
+      <div className={clsx("w-full", MAP_HEIGHT)}>
         <EmptySign label="아직 등록된 식당이 없어요" />
       </div>
     );
   }
 
   return (
-    <div className="relative left-1/2 flex h-[70vh] w-screen -translate-x-1/2 gap-4 px-4 md:px-6">
+    <div
+      className={clsx(
+        "relative left-1/2 flex w-screen -translate-x-1/2 gap-4 px-4 md:px-6",
+        MAP_HEIGHT,
+      )}
+    >
       <div className="hidden w-96 shrink-0 overflow-hidden rounded-2xl bg-white shadow-md md:flex">
         <RestaurantMapList
           restaurants={filteredRestaurants}
