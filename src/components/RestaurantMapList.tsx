@@ -25,7 +25,7 @@ export default function RestaurantMapList({
   onLocate,
 }: Props) {
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full min-w-0 flex-1 flex-col">
       <div className="p-4 pb-2">
         <TextField
           placeholder="식당 이름으로 검색"
@@ -36,7 +36,7 @@ export default function RestaurantMapList({
       <div className="px-3">
         <CategoryFilter value={category} onChange={setCategory} />
       </div>
-      <div className="flex-1 overflow-y-auto p-2">
+      <div className="min-w-0 flex-1 overflow-y-auto p-2">
         {restaurants.length === 0 ? (
           <EmptySign label="일치하는 식당이 없어요" />
         ) : (
