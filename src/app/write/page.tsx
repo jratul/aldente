@@ -30,15 +30,13 @@ export default function WritePage() {
   const { mutate: writeReview, isPending, isSuccess } = useWriteReview();
 
   const handleSubmit = () => {
-    if (
-      !(
-        selectedPlace &&
-        imageFiles.length > 0 &&
-        foodCategory &&
-        title &&
-        contentRef?.current?.value
-      )
-    ) {
+    if (!(
+      selectedPlace &&
+      imageFiles.length > 0 &&
+      foodCategory &&
+      title &&
+      contentRef?.current?.value
+    )) {
       openAlert({
         title: "잠시만요!",
         content: (
